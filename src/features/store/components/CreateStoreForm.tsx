@@ -1,9 +1,11 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForm } from "react-hook-form";
 
+import { TCreateStoreFields } from "@/features/store/core/types";
 import { createStoreSchema } from "@/features/store/core/validations";
+import createStore from "@/features/store/core/services/api/create-store.api";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 const CreateStoreForm = () => {
   const form = useForm({
@@ -23,8 +24,8 @@ const CreateStoreForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof createStoreSchema>) => {
-    console.log(values);
+  const onSubmit = (values: TCreateStoreFields) => {
+    createStore(values);
   };
 
   return (

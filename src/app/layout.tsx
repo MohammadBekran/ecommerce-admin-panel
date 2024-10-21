@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 
 import ClerkProvider from "@/components/partials/providers/ClerkProvider";
 import ModalProvider from "@/components/partials/providers/ModalProvider";
+import ToasterProvider from "@/components/partials/providers/ToasterProvider";
 
 import "./globals.css";
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.variable} ${inter.variable} antialiased`}>
+          <ToasterProvider />
           <ModalProvider />
           {children}
         </body>

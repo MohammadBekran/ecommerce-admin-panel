@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@clerk/nextjs/server";
 
-import { storeSchema } from "@/features/store/core/validations";
+import { createStoreSchema } from "@/features/store/core/validations";
 
 import prisma from "@/lib/db";
 
@@ -16,7 +16,7 @@ export const POST = async (request: NextRequest) => {
     if (!userId)
       return NextResponse.json({ error: "UnAuthorized" }, { status: 401 });
 
-    const validation = storeSchema.safeParse(body);
+    const validation = createStoreSchema.safeParse(body);
 
     if (!validation.success)
       return NextResponse.json(validation.error.format(), { status: 400 });
