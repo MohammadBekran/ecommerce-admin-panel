@@ -1,9 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
+import createStore from "@/features/store/core/services/api/create-store.api";
 import { TCreateStoreFields } from "@/features/store/core/types";
 import { createStoreSchema } from "@/features/store/core/validations";
-import createStore from "@/features/store/core/services/api/create-store.api";
+import { useCreateStoreModal } from "@/features/store/hooks";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,15 +19,17 @@ import {
 import { Input } from "@/components/ui/input";
 
 const CreateStoreForm = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm({
     resolver: zodResolver(createStoreSchema),
     defaultValues: {
       name: "",
     },
   });
+  const onClose = useCreateStoreModal((state) => state.onClose);
 
   const onSubmit = (values: TCreateStoreFields) => {
-    createStore(values);
+    startTransition(() => createStore(values));
   };
 
   return (
@@ -44,7 +48,19 @@ const CreateStoreForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Continue</Button>
+        <div className="flex gap-2 justify-end">
+          <Button type="submit" disabled={isPending}>
+            Continue
+          </Button>
+          <Button
+            type="submit"
+            variant="ghost"
+            disabled={isPending}
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </Form>
   );

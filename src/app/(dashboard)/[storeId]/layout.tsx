@@ -1,23 +1,24 @@
-import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-import getStore from "@/core/services/api/store/get-store.api";
+import Header from "@/components/header";
 
-const StoreLayout = async ({ params }: { params: { storeId: string } }) => {
+const StoreLayout = async ({
+  children,
+}: {
+  children: React.ReactNode;
+  params: { storeId: string };
+}) => {
   const { userId } = auth();
 
   if (!userId) redirect("/sign-in");
 
-  const store = await getStore({
-    where: {
-      id: params.storeId,
-      userId,
-    },
-  });
-
-  if (!store) redirect("/");
-
-  return <div>StoreLayout</div>;
+  return (
+    <div>
+      <Header />
+      {children}
+    </div>
+  );
 };
 
 export default StoreLayout;

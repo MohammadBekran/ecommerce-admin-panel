@@ -6,12 +6,12 @@ import Modal from "@/components/ui/modal";
 import CreateStoreForm from "@/features/store/components/CreateStoreForm";
 
 const CreateStoreModal = () => {
-  const { open } = useCreateStoreModal();
+  const { open, onClose } = useCreateStoreModal();
 
   return (
     <Modal
       open={open}
-      onClose={() => {}}
+      onClose={onClose}
       title="Create Store"
       description="Add a new store to manage products and categories"
     >

@@ -21,15 +21,13 @@ const Modal = ({
   description,
   children,
 }: IModalProps) => {
-  const onChange = () => {
-    if (!open) onClose();
-  };
+  const onChange = () => !open && onClose();
 
   return (
     <Dialog open={open} onOpenChange={onChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle className="font-bold">{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div>{children}</div>
