@@ -1,11 +1,9 @@
-import Heading from "@/components/ui/heading";
+import SettingsHeading from "@/features/settings/components/settings-heading";
 
 const Settings = () => {
   return (
     <div>
-      <div className="flex justify-between">
-        <Heading title="Settings" description="Manage store preferences." />
-      </div>
+      <SettingsHeading />
     </div>
   );
 };

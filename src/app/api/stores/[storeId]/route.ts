@@ -46,3 +46,36 @@ export const PATCH = async (
     );
   }
 };
+
+export const DELETE = async (
+  request: NextRequest,
+  params: { storeId: string }
+) => {
+  try {
+    const { userId } = auth();
+
+    if (!userId)
+      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+
+    const where = { id: params.storeId, userId };
+
+    const store = await prisma.store.findUnique({
+      where,
+    });
+
+    if (!store)
+      return NextResponse.json({ message: "Invalid store" }, { status: 404 });
+
+    const deletedStore = await prisma.store.delete({
+      where,
+    });
+
+    return NextResponse.json(deletedStore);
+  } catch (error) {
+    console.error("[STORE_ERROR]", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+};
