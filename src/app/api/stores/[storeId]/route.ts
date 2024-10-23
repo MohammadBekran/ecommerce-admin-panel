@@ -49,7 +49,7 @@ export const PATCH = async (
 
 export const DELETE = async (
   request: NextRequest,
-  params: { storeId: string }
+  params: { params: { storeId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -57,7 +57,9 @@ export const DELETE = async (
     if (!userId)
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
 
-    const where = { id: params.storeId, userId };
+    const { params: storeParams } = params;
+
+    const where = { id: storeParams.storeId, userId };
 
     const store = await prisma.store.findUnique({
       where,
