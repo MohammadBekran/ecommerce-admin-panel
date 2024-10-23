@@ -17,7 +17,7 @@ const StorePage = async ({ params }: { params: { storeId: string } }) => {
 
   if (!store) redirect("/");
 
-  return <div className="px-5">Active store: {store?.name}</div>;
+  return <div>Active store: {store?.name}</div>;
 };
 
 export default StorePage;

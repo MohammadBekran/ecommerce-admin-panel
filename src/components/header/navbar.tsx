@@ -1,26 +1,30 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils";
 import MENU_ITEMS from "@/core/constants/menu-items.constants";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const params = useParams();
 
   return (
     <nav>
-      <ul>
+      <ul className="flex gap-4">
         {MENU_ITEMS.map((menuItem) => {
+          const dynamicRoute = `/${params.storeId}${menuItem.pathname}`;
+
           return (
             <li
               key={menuItem.pathname}
               className={cn(
                 "text-sm text-gray-500 hover:text-gray-900 transition-colors font-medium",
-                pathname === menuItem.pathname && "text-gray-900"
+                pathname === dynamicRoute && "text-gray-900"
               )}
             >
-              {menuItem.label}
+              <Link href={dynamicRoute}>{menuItem.label}</Link>
             </li>
           );
         })}
