@@ -7,11 +7,12 @@ import prisma from "@/lib/db";
 
 export const PATCH = async (
   request: NextRequest,
-  params: { storeId: string }
+  params: { params: { storeId: string } }
 ) => {
   try {
     const body = await request.json();
     const { userId } = auth();
+    const { params: sendParams } = params;
 
     if (!userId)
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
@@ -21,7 +22,7 @@ export const PATCH = async (
     if (!validation.success)
       return NextResponse.json(validation.error.format(), { status: 400 });
 
-    const where = { id: params.storeId, userId };
+    const where = { id: sendParams.storeId, userId };
 
     const store = await prisma.store.findUnique({
       where,

@@ -1,10 +1,16 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Store } from "@prisma/client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
+import { TSettingsFormData } from "@/features/settings/core/types";
 import { settingsFormSchema } from "@/features/settings/core/validations";
+
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,12 +20,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-
-type TSettingsFormData = z.infer<typeof settingsFormSchema>;
+import { toast } from "@/core/utils";
 
 const SettingsForm = ({ store }: { store: Store }) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<TSettingsFormData>({
     resolver: zodResolver(settingsFormSchema),
     defaultValues: {
@@ -27,8 +32,19 @@ const SettingsForm = ({ store }: { store: Store }) => {
     },
   });
 
-  const onSubmit = (values: TSettingsFormData) => {
-    console.log(values);
+  const onSubmit = async (values: TSettingsFormData) => {
+    try {
+      setIsLoading(true);
+      await axios.patch(`/api/stores/${store.id}`, values);
+      toast.success("Store has been updated.");
+
+      router.refresh();
+    } catch {
+      setIsLoading(false);
+      toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -50,7 +66,9 @@ const SettingsForm = ({ store }: { store: Store }) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Save changes</Button>
+        <Button type="submit" disabled={isLoading}>
+          Save changes
+        </Button>
       </form>
     </Form>
   );
