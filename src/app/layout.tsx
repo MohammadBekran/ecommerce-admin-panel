@@ -10,7 +10,7 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
   weight: ["100", "300", "500", "700", "900"],
-  variable: "--font-poppins",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
