@@ -14,9 +14,25 @@ datasource db {
 }
 
 model Store {
-  id        String   @id @default(uuid())
-  name      String
-  userId    String
+  id     String @id @default(uuid())
+  name   String
+  userId String
+
+  Billboard Billboard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Billboard {
+  id String @id @default(uuid())
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  label    String
+  imageUrl String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
