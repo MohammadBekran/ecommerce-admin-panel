@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import SettingsApiAlert from "@/features/settings/components/settings-api-alert";
 import SettingsForm from "@/features/settings/components/settings-form";
 import SettingsHeading from "@/features/settings/components/settings-heading";
 
@@ -12,7 +13,6 @@ const Settings = async ({ storeId }: { storeId: string }) => {
       id: storeId,
     },
   });
-
   if (!store) redirect("/");
 
   return (
@@ -22,6 +22,8 @@ const Settings = async ({ storeId }: { storeId: string }) => {
         <Separator />
       </div>
       <SettingsForm store={store} />
+      <Separator />
+      <SettingsApiAlert storeId={storeId} />
     </div>
   );
 };
