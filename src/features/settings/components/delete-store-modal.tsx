@@ -15,13 +15,13 @@ const DeleteStoreModal = ({ open, setOpen }: IDeleteStoreModalProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  const onDeleteStore = () => {
+    router.push("/");
+    router.refresh();
+  };
+
   const handleDeleteStore = () => {
-    startTransition(() =>
-      deleteStore(params.storeId, () => {
-        router.push("/");
-        router.refresh();
-      })
-    );
+    startTransition(() => deleteStore(params.storeId, onDeleteStore));
   };
 
   return (

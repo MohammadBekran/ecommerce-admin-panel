@@ -9,7 +9,7 @@ const SettingsApiAlert = ({ storeId }: { storeId: string }) => {
   return (
     <ApiAlert
       title="NEXT_PUBLIC_API_URL"
-      description={`${origin}/api/${storeId}`}
+      description={`${origin}/api/stores/${storeId}`}
       variant="public"
     />
   );

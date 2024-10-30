@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-import StoreSwitcher from "@/components/header/store-switcher";
 import Navbar from "@/components/header/navbar";
+import StoreSwitcher from "@/components/header/store-switcher";
 import { Separator } from "@/components/ui/separator";
 import getStores from "@/core/services/api/store/get-stores.api";
 
@@ -24,7 +24,7 @@ const Header = async () => {
 
   return (
     <div className="py-3 space-y-3">
-      <div className="flex gap-3">
+      <div className="max-w-[1440px] mx-auto flex gap-3">
         <div className="flex items-center gap-2">
           <div className="px-3">
             <StoreSwitcher stores={formattedStores} />
