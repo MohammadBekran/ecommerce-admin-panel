@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import deleteBillboard from "@/features/billboards/core/services/api/delete-billboard.api";
-import TBillboardColumn from "@/features/billboards/core/types/billboard-columns.type";
+import TBillboardColumn from "@/features/billboards/core/types/billboard-column.type";
 
 import AlertModal from "@/components/ui/alert-modal";
 import { Button } from "@/components/ui/button";

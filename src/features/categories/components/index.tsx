@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-import BILLBOARDS_COLUMNS from "@/features/billboards/core/constants/billboard-columns.constants";
-import type TBillboardColumns from "@/features/billboards/core/types/billboard-column.type";
+import TCategoryColumn from "@/features/categories/core/types/category-columns.type";
+import CATEGORY_COLUMNS from "../core/constants/category-columns.constants";
 
 import ApiList from "@/components/ui/api-list";
 import { Button } from "@/components/ui/button";
@@ -10,21 +10,21 @@ import { DataTable } from "@/components/ui/data-table";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 
-interface IBillboardsProps {
+interface ICategoriesProps {
   storeId: string;
-  billboards: TBillboardColumns[];
+  categories: TCategoryColumn[];
 }
 
-const Billboards = ({ storeId, billboards }: IBillboardsProps) => {
+const Categories = ({ storeId, categories }: ICategoriesProps) => {
   return (
     <div>
       <div className="space-y-4 mb-5">
         <div className="flex justify-between">
           <Heading
-            title={`Billboards (${billboards.length})`}
-            description="Manage billboards for your store"
+            title={`Categories (${categories.length})`}
+            description="Manage categories for your store"
           />
-          <Link href={`/${storeId}/billboards/new`}>
+          <Link href={`/${storeId}/categories/new`}>
             <Button>
               <Plus />
               Add new
@@ -34,17 +34,17 @@ const Billboards = ({ storeId, billboards }: IBillboardsProps) => {
         <Separator />
       </div>
       <DataTable
-        columns={BILLBOARDS_COLUMNS}
-        data={billboards}
-        searchKey="label"
+        columns={CATEGORY_COLUMNS}
+        data={categories}
+        searchKey="name"
       />
-      <Heading title="API " description="API calls for Billboards" />
+      <Heading title="API " description="API calls for Categories" />
       <div className="my-4 space-y-4">
         <Separator />
-        <ApiList entityName="billboards" entityIdName="billboardId" />
+        <ApiList entityName="categories" entityIdName="categoryId" />
       </div>
     </div>
   );
 };
 
-export default Billboards;
+export default Categories;

@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import CellAction from "@/features/billboards/components/cell-action";
-import TBillboardColumn from "@/features/billboards/core/types/billboard-columns.type";
+import TBillboardColumn from "@/features/billboards/core/types/billboard-column.type";
 
 const BILLBOARDS_COLUMNS: ColumnDef<TBillboardColumn>[] = [
   {
