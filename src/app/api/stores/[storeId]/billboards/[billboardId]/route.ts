@@ -12,8 +12,6 @@ export const PATCH = async (
     const { params: sendParams } = params;
     const { userId } = auth();
 
-    console.log(body);
-
     if (!userId) {
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
@@ -58,6 +56,44 @@ export const PATCH = async (
   } catch (error) {
     console.error("[BILLBOARD_ERROR]", error);
 
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (
+  request: NextRequest,
+  params: { params: { storeId: string; billboardId: string } }
+) => {
+  try {
+    const { userId } = auth();
+
+    if (!userId)
+      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+
+    const { params: sendParams } = params;
+
+    const where = { id: sendParams.billboardId, storeId: sendParams.storeId };
+
+    const billboard = await prisma.billboard.findUnique({
+      where,
+    });
+
+    if (!billboard)
+      return NextResponse.json(
+        { message: "Invalid billboard" },
+        { status: 404 }
+      );
+
+    const deletedBillboard = await prisma.billboard.delete({
+      where,
+    });
+
+    return NextResponse.json(deletedBillboard);
+  } catch (error) {
+    console.error("[BILLBOARD_ERROR]", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

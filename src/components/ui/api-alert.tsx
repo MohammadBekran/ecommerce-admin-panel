@@ -5,7 +5,7 @@ import { Copy, Server } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/core/utils";
+import copyText from "@/core/utils/copy-text.utils";
 
 interface IApiAlertProps {
   title: string;
@@ -28,11 +28,6 @@ const ApiAlert = ({
   description,
   variant = "public",
 }: IApiAlertProps) => {
-  const onCopy = () => {
-    navigator.clipboard.writeText(description);
-    toast.success("API Route copied to the clipboard.");
-  };
-
   return (
     <Alert>
       <Server className="size-4" />
@@ -44,7 +39,13 @@ const ApiAlert = ({
         <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
           {description}
         </code>
-        <Button variant="outline" size="icon" onClick={onCopy}>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() =>
+            copyText(description, "API Route copied to the clipboard.")
+          }
+        >
           <Copy className="size-4" />
         </Button>
       </AlertDescription>

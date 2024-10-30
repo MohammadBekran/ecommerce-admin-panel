@@ -64,6 +64,12 @@
   }
 }
 
+@layer components {
+  .billboard-cell-action-icon {
+    @apply mr-2 size-4;
+  }
+}
+
 /* Clerk */
 .cl-rootBox {
   @apply w-full h-full flex justify-center items-center;

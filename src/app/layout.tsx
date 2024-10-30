@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 
 import ClerkProvider from "@/components/partials/providers/ClerkProvider";
 import ModalProvider from "@/components/partials/providers/ModalProvider";
@@ -7,14 +7,8 @@ import ToasterProvider from "@/components/partials/providers/ToasterProvider";
 
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["100", "300", "500", "700", "900"],
-  variable: "--font-inter",
-});
-
 export const metadata: Metadata = {
-  title: "Create Next App",
+  title: "Ecommerce admin panel",
   description: "Developed by Mohammad Bekran",
 };
 
@@ -25,8 +19,8 @@ export default async function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${inter.variable} ${inter.variable} antialiased`}>
+      <html lang="en" className={GeistSans.className}>
+        <body className="antialiased">
           <ToasterProvider />
           <ModalProvider />
           {children}

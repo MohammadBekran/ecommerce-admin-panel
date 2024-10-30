@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { auth } from "@clerk/nextjs/server";
-
 import { createBillboardSchema } from "@/features/billboards/core/validations";
 
 import prisma from "@/lib/db";
@@ -11,14 +9,10 @@ export const POST = async (
   params: { params: { storeId: string } }
 ) => {
   try {
-    const { userId } = auth();
     const body = await request.json();
 
     const { label, imageUrl } = body;
     const { params: sendParams } = params;
-
-    if (!userId)
-      return NextResponse.json({ error: "UnAuthorized" }, { status: 401 });
 
     const validation = createBillboardSchema.safeParse(body);
 

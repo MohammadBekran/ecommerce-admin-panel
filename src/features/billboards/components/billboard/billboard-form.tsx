@@ -42,9 +42,9 @@ const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
     },
   });
 
-  const buttonTitle = billboard ? "Update billboard" : "Create billboard";
+  const buttonTitle = billboard ? "Edit billboard" : "Create billboard";
   const toastMessage = billboard
-    ? "Billboard has been updated."
+    ? "Billboard has been edited."
     : "Billboard has been created.";
 
   const handleUploadComplete = (
@@ -108,7 +108,7 @@ const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
                   <Button
                     size="icon"
                     variant="destructive"
-                    className="absolute top-4 left-2"
+                    className="absolute top-4 right-2"
                     onClick={() => handleDeleteImage(field.value)}
                   >
                     <Trash className="size-4" />
