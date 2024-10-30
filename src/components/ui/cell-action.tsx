@@ -4,9 +4,6 @@ import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-import deleteBillboard from "@/features/billboards/core/services/api/delete-billboard.api";
-import TBillboardColumn from "@/features/billboards/core/types/billboard-column.type";
-
 import AlertModal from "@/components/ui/alert-modal";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,21 +15,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import copyText from "@/core/utils/copy-text.utils";
 
-const CellAction = ({ data }: { data: TBillboardColumn }) => {
+interface ICellActionProps<T> {
+  data: T;
+  dataKey: string;
+  apiKey: string;
+  onDelete: (id: string, onDelete: () => void) => void;
+}
+
+const CellAction = <T extends { id: string }>({
+  data,
+  dataKey,
+  apiKey,
+  onDelete,
+}: ICellActionProps<T>) => {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const params = useParams();
 
-  const onDeleteBillboard = () => {
+  const onDeleteFunc = () => {
     router.refresh();
     setOpen(false);
   };
 
-  const handleDeleteBillboard = () => {
-    startTransition(() =>
-      deleteBillboard(params.storeId, data.id, onDeleteBillboard)
-    );
+  const handleDelete = () => {
+    startTransition(() => onDelete(params.storeId as string, onDeleteFunc));
   };
 
   return (
@@ -42,7 +49,7 @@ const CellAction = ({ data }: { data: TBillboardColumn }) => {
         description="This action cannot be undone."
         open={open}
         onClose={() => setOpen(false)}
-        onConfirm={handleDeleteBillboard}
+        onConfirm={handleDelete}
         loading={isPending}
       />
       <DropdownMenu>
@@ -56,7 +63,7 @@ const CellAction = ({ data }: { data: TBillboardColumn }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              copyText(data.id, "Billboard Id copied to clipboard.")
+              copyText(data.id, `${dataKey} Id copied to clipboard.`)
             }
           >
             <Copy className="cell-action-icon" />
@@ -64,7 +71,7 @@ const CellAction = ({ data }: { data: TBillboardColumn }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/${apiKey}/${data.id}`)
             }
           >
             <Edit className="cell-action-icon" />

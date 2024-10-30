@@ -1,5 +1,5 @@
 import Billboards from "@/features/billboards/components";
-import TBillboardColumn from "@/features/billboards/core/types/billboard-columns.type";
+import TBillboardColumn from "@/features/billboards/core/types/billboard-column.type";
 
 import dateTimeFormatter from "@/core/utils/date-formatter.utils";
 import prisma from "@/lib/db";

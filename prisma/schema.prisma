@@ -19,6 +19,7 @@ model Store {
   userId String
 
   Billboard Billboard[]
+  Category  Category[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -32,6 +33,22 @@ model Billboard {
 
   label    String
   imageUrl String
+  Category Category[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id String @id @default(uuid())
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  billboardId String
+  billboard   Billboard @relation(fields: [billboardId], references: [id], onDelete: Cascade)
+
+  name String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
