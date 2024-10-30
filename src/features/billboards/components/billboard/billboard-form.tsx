@@ -32,7 +32,7 @@ interface IBillboardFormProps {
 
 const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(billboard?.imageUrl ?? "");
   const router = useRouter();
   const form = useForm<TBillboardFormData>({
     resolver: zodResolver(createBillboardSchema),

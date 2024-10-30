@@ -12,6 +12,8 @@ export const PATCH = async (
     const { params: sendParams } = params;
     const { userId } = auth();
 
+    console.log(body);
+
     if (!userId) {
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
@@ -47,7 +49,7 @@ export const PATCH = async (
         storeId: sendParams.storeId,
       },
       data: {
-        label: body.title,
+        label: body.label,
         imageUrl: body.imageUrl,
       },
     });
