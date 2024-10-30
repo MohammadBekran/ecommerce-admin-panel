@@ -2,8 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import CellAction from "@/features/billboards/components/cell-action";
+import CellAction from "@/components/ui/cell-action";
 import TBillboardColumn from "@/features/billboards/core/types/billboard-column.type";
+import deleteBillboard from "../services/api/delete-billboard.api";
 
 const BILLBOARDS_COLUMNS: ColumnDef<TBillboardColumn>[] = [
   {
@@ -16,7 +17,16 @@ const BILLBOARDS_COLUMNS: ColumnDef<TBillboardColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
+    cell: ({ row }) => (
+      <CellAction
+        data={row.original}
+        dataKey="Billboards"
+        apiKey="billboards"
+        onDelete={async (storeId, onDelete) =>
+          await deleteBillboard(storeId, row.original.id, onDelete)
+        }
+      />
+    ),
   },
 ];
 

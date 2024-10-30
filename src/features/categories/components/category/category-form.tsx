@@ -50,7 +50,7 @@ const CategoryForm = ({
     },
   });
 
-  const buttonTitle = category ? "Edit category" : "Create";
+  const buttonTitle = category ? "Edit category" : "Create category";
   const toastMessage = category
     ? "Category has been edited."
     : "Category has been created.";
