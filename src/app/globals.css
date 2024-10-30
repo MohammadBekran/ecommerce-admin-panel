@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -55,16 +56,11 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
-@layer base {
-  * {
-    @apply border-border;
-  }
   html {
-    @apply h-full;
+    @apply size-full;
   }
   body {
-    @apply bg-background text-foreground w-full h-full;
+    @apply size-full bg-background text-foreground pb-10;
   }
 }
 

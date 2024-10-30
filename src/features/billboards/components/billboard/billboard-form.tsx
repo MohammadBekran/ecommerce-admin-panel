@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Billboard } from "@prisma/client";
 import axios from "axios";
+import { Trash } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/core/utils";
-import { UploadButton } from "@/lib/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 
 interface IBillboardFormProps {
   billboard: (Billboard | null) | undefined;
@@ -29,14 +31,37 @@ interface IBillboardFormProps {
 }
 
 const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState("");
+  const router = useRouter();
   const form = useForm<TBillboardFormData>({
     resolver: zodResolver(createBillboardSchema),
     defaultValues: {
-      label: billboard?.label || "",
+      label: billboard?.label ?? "",
+      imageUrl: billboard?.imageUrl ?? "",
     },
   });
+
+  const buttonTitle = billboard ? "Update billboard" : "Create billboard";
+  const toastMessage = billboard
+    ? "Billboard has been updated."
+    : "Billboard has been created.";
+
+  const handleUploadComplete = (
+    field: { onChange: (imageUrl: string) => void },
+    res: { url: string }[]
+  ) => {
+    field.onChange(res[0].url);
+    setImage(res[0].url);
+
+    toast.success("File uploaded.");
+  };
+
+  const handleDeleteImage = (value: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    value = "";
+    setImage("");
+  };
 
   const onSubmit = async (values: TBillboardFormData) => {
     try {
@@ -47,8 +72,9 @@ const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
           values
         );
       } else await axios.post(`/api/stores/${storeId}/billboards`, values);
-      toast.success("Store has been updated.");
+      toast.success(toastMessage);
 
+      router.push(`/${storeId}/billboards`);
       router.refresh();
     } catch {
       setIsLoading(false);
@@ -62,7 +88,7 @@ const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-xl space-y-6"
+        className="max-w-xl space-y-6 p-4"
       >
         <FormField
           control={form.control}
@@ -70,15 +96,33 @@ const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Image</FormLabel>
+              {image && (
+                <div className="relative w-[170px] h-[200px] overflow-hidden rounded-2xl">
+                  <Image
+                    src={image}
+                    fill
+                    objectFit="cover"
+                    alt="billboard image"
+                    className="rounded-xl overflow-hidden"
+                  />
+                  <Button
+                    size="icon"
+                    variant="destructive"
+                    className="absolute top-4 left-2"
+                    onClick={() => handleDeleteImage(field.value)}
+                  >
+                    <Trash className="size-4" />
+                  </Button>
+                </div>
+              )}
               <FormControl>
-                <UploadButton
+                <UploadDropzone
                   endpoint="imageUploader"
-                  onClientUploadComplete={(res: { url: string }[]) => {
-                    field.onChange(res[0].url);
-                    toast.success("File uploaded.");
-                  }}
+                  onClientUploadComplete={(res) =>
+                    handleUploadComplete(field, res)
+                  }
                   onUploadError={() => {
-                    toast.error("Something went wrong,");
+                    toast.error("Something went wrong.");
                   }}
                   {...field}
                 />
@@ -101,7 +145,7 @@ const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
           )}
         />
         <Button type="submit" disabled={isLoading}>
-          Save changes
+          {buttonTitle}
         </Button>
       </form>
     </Form>
