@@ -1,84 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { auth } from "@clerk/nextjs/server";
 
-import updateStoreSchema from "@/features/store/core/validations/update-store.validation";
+import { createStoreSchema } from "@/features/store/core/validations";
 
 import prisma from "@/lib/db";
 
-export const PATCH = async (
-  request: NextRequest,
-  params: { params: { storeId: string } }
-) => {
+export const POST = async (request: NextRequest) => {
   try {
-    const body = await request.json();
     const { userId } = auth();
-    const { params: sendParams } = params;
+    const body = await request.json();
+
+    const { name } = body;
 
     if (!userId)
-      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+      return NextResponse.json({ error: "UnAuthorized" }, { status: 401 });
 
-    const validation = updateStoreSchema.safeParse(body);
+    const validation = createStoreSchema.safeParse(body);
 
     if (!validation.success)
       return NextResponse.json(validation.error.format(), { status: 400 });
 
-    const where = { id: sendParams.storeId, userId };
-
-    const store = await prisma.store.findUnique({
-      where,
-    });
-
-    if (!store)
-      return NextResponse.json({ message: "Invalid store" }, { status: 404 });
-
-    const updatedStore = await prisma.store.update({
-      where,
+    const newStore = await prisma.store.create({
       data: {
-        name: body.name,
+        userId,
+        name,
       },
     });
 
-    return NextResponse.json(updatedStore);
+    return NextResponse.json(newStore, { status: 201 });
   } catch (error) {
     console.error("[STORE_ERROR]", error);
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
-  }
-};
 
-export const DELETE = async (
-  request: NextRequest,
-  params: { params: { storeId: string } }
-) => {
-  try {
-    const { userId } = auth();
-
-    if (!userId)
-      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
-
-    const { params: storeParams } = params;
-
-    const where = { id: storeParams.storeId, userId };
-
-    const store = await prisma.store.findUnique({
-      where,
-    });
-
-    if (!store)
-      return NextResponse.json({ message: "Invalid store" }, { status: 404 });
-
-    const deletedStore = await prisma.store.delete({
-      where,
-    });
-
-    return NextResponse.json(deletedStore);
-  } catch (error) {
-    console.error("[STORE_ERROR]", error);
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json("Internal server error", { status: 500 });
   }
 };

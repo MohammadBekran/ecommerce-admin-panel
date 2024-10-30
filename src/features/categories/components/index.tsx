@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-import TCategoryColumn from "@/features/categories/core/types/category-columns.type";
-import CATEGORY_COLUMNS from "../core/constants/category-columns.constants";
+import { TCategoryColumn } from "@/features/categories/core/types";
+import { CATEGORY_COLUMNS } from "@/features/categories/core/constants";
 
 import ApiList from "@/components/ui/api-list";
 import { Button } from "@/components/ui/button";

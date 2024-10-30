@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import TCategoryColumn from "@/features/categories/core/types/category-columns.type";
+import { TCategoryColumn } from "@/features/categories/core/types";
 
 const CATEGORY_COLUMNS: ColumnDef<TCategoryColumn>[] = [
   {
