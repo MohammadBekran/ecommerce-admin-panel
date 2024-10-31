@@ -2,9 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
+import { deleteBillboard } from "@/features/billboards/core/services/api";
+import { TBillboardColumn } from "@/features/billboards/core/types";
+
 import CellAction from "@/components/ui/cell-action";
-import TBillboardColumn from "@/features/billboards/core/types/billboard-column.type";
-import deleteBillboard from "../services/api/delete-billboard.api";
 
 const BILLBOARDS_COLUMNS: ColumnDef<TBillboardColumn>[] = [
   {

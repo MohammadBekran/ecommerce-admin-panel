@@ -1,6 +1,7 @@
 import type { Billboard } from "@prisma/client";
 
 import BillboardForm from "@/features/billboards/components/billboard/billboard-form";
+
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 
@@ -10,9 +11,9 @@ interface IBillboardProps {
 }
 
 const Billboard = async ({ billboard, storeId }: IBillboardProps) => {
-  const heading = billboard ? "Update billboard" : "Billboard creation";
+  const heading = billboard ? "Edit billboard" : "Create billboard";
   const description = billboard
-    ? "Update a billboard"
+    ? "Edit a billboard"
     : "Create a new billboard in your store";
 
   return (
