@@ -20,8 +20,8 @@ const Navbar = () => {
             <li
               key={menuItem.pathname}
               className={cn(
-                "text-sm text-gray-500 hover:text-gray-900 transition-colors font-medium",
-                pathname === dynamicRoute && "text-gray-900"
+                "text-sm text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-colors font-medium",
+                pathname === dynamicRoute && "text-gray-900 dark:text-gray-300"
               )}
             >
               <Link href={dynamicRoute}>{menuItem.label}</Link>
