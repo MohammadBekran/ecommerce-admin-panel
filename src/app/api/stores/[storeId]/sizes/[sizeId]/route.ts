@@ -5,10 +5,10 @@ import prisma from "@/lib/db";
 
 export const PATCH = async (
   request: NextRequest,
-  params: { params: { storeId: string; billboardId: string } }
+  params: { params: { storeId: string; sizeId: string } }
 ) => {
   try {
-    const { label, imageUrl } = await request.json();
+    const { name, value } = await request.json();
     const { params: sendParams } = params;
     const { userId } = auth();
 
@@ -16,9 +16,9 @@ export const PATCH = async (
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
 
-    if (!sendParams.billboardId) {
+    if (!sendParams.sizeId) {
       return NextResponse.json(
-        { message: "BillboardId is required." },
+        { message: "sizeId is required." },
         { status: 400 }
       );
     }
@@ -30,31 +30,28 @@ export const PATCH = async (
       );
     }
 
-    const billboard = await prisma.billboard.findUnique({
-      where: { id: sendParams.billboardId, storeId: sendParams.storeId },
+    const size = await prisma.size.findUnique({
+      where: { id: sendParams.sizeId, storeId: sendParams.storeId },
     });
 
-    if (!billboard) {
-      return NextResponse.json(
-        { message: "Invalid billboard" },
-        { status: 404 }
-      );
+    if (!size) {
+      return NextResponse.json({ message: "Invalid size" }, { status: 404 });
     }
 
-    const updatedBillboard = await prisma.billboard.update({
+    const updatedSize = await prisma.size.update({
       where: {
-        id: sendParams.billboardId,
+        id: sendParams.sizeId,
         storeId: sendParams.storeId,
       },
       data: {
-        label,
-        imageUrl,
+        name,
+        value,
       },
     });
 
-    return NextResponse.json(updatedBillboard);
+    return NextResponse.json(updatedSize);
   } catch (error) {
-    console.error("[BILLBOARD_ERROR]", error);
+    console.error("[SIZE_ERROR]", error);
 
     return NextResponse.json(
       { message: "Internal server error" },
@@ -65,7 +62,7 @@ export const PATCH = async (
 
 export const DELETE = async (
   request: NextRequest,
-  params: { params: { storeId: string; billboardId: string } }
+  params: { params: { storeId: string; sizeId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -75,25 +72,22 @@ export const DELETE = async (
 
     const { params: sendParams } = params;
 
-    const where = { id: sendParams.billboardId, storeId: sendParams.storeId };
+    const where = { id: sendParams.sizeId, storeId: sendParams.storeId };
 
-    const billboard = await prisma.billboard.findUnique({
+    const size = await prisma.size.findUnique({
       where,
     });
 
-    if (!billboard)
-      return NextResponse.json(
-        { message: "Invalid billboard" },
-        { status: 404 }
-      );
+    if (!size)
+      return NextResponse.json({ message: "Invalid size" }, { status: 404 });
 
-    const deletedBillboard = await prisma.billboard.delete({
+    const deletedSize = await prisma.size.delete({
       where,
     });
 
-    return NextResponse.json(deletedBillboard);
+    return NextResponse.json(deletedSize);
   } catch (error) {
-    console.error("[BILLBOARD_ERROR]", error);
+    console.error("[SIZE_ERROR]", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
