@@ -4,6 +4,7 @@ const MENU_ITEMS = [
   { label: "Billboards", pathname: "/billboards" },
   { label: "Categories", pathname: "/categories" },
   { label: "Sizes", pathname: "/sizes" },
+  { label: "Colors", pathname: "/colors" },
 ] as const;
 
 export default MENU_ITEMS;
