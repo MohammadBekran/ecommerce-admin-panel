@@ -16,7 +16,7 @@ const StoreLayout = async ({
   return (
     <div>
       <Header />
-      <div className="max-w-[1440px] mx-auto px-5 pb-5">{children}</div>
+      <div className="max-w-[1440px] mx-auto px-5 py-1">{children}</div>
     </div>
   );
 };

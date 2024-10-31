@@ -6,6 +6,7 @@ import deleteColor from "@/features/colors/core/services/api/delete-color.api";
 import { TColorColumn } from "@/features/colors/core/types";
 
 import CellAction from "@/components/ui/cell-action";
+import Color from "@/components/ui/color";
 
 const COLOR_COLUMNS: ColumnDef<TColorColumn>[] = [
   {
@@ -15,15 +16,7 @@ const COLOR_COLUMNS: ColumnDef<TColorColumn>[] = [
   {
     accessorKey: "value",
     header: "Value",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-x-2">
-        {row.original.value}
-        <div
-          className="size-6 rounded-full border"
-          style={{ backgroundColor: row.original.value }}
-        />
-      </div>
-    ),
+    cell: ({ row }) => <Color color={row.original.value} />,
   },
   {
     accessorKey: "createdAt",
