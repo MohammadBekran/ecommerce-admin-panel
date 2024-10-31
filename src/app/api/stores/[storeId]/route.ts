@@ -6,7 +6,7 @@ import { createStoreSchema } from "@/features/store/core/validations";
 
 import prisma from "@/lib/db";
 
-export const POST = async (request: NextRequest) => {
+export const PATCH = async (request: NextRequest) => {
   try {
     const { userId } = auth();
     const body = await request.json();
