@@ -21,6 +21,7 @@ model Store {
   Billboard Billboard[]
   Category  Category[]
   Size      Size[]
+  Color     Color[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -60,6 +61,19 @@ model Size {
 
   storeId String
   store   Store  @relation(fields: [storeId], references: [id])
+
+  name  String
+  value String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Color {
+  id String @id @default(uuid())
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
   name  String
   value String
