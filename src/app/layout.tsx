@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import ClerkProvider from "@/components/partials/providers/ClerkProvider";
 import ModalProvider from "@/components/partials/providers/ModalProvider";
 import ToasterProvider from "@/components/partials/providers/ToasterProvider";
+import { ThemeProvider } from "@/components/partials/providers/ThemeProvider";
 
 import "./globals.css";
 
@@ -21,9 +22,16 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" className={GeistSans.className}>
         <body className="antialiased">
-          <ToasterProvider />
-          <ModalProvider />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ToasterProvider />
+            <ModalProvider />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

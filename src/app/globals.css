@@ -74,3 +74,7 @@
 .cl-rootBox {
   @apply w-full h-full flex justify-center items-center;
 }
+
+html.dark body * {
+  border-color: #3b3b3b !important;
+}
