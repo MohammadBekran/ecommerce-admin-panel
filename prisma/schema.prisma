@@ -20,6 +20,7 @@ model Store {
 
   Billboard Billboard[]
   Category  Category[]
+  Size      Size[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -49,6 +50,19 @@ model Category {
   billboard   Billboard @relation(fields: [billboardId], references: [id], onDelete: Cascade)
 
   name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Size {
+  id String @id @default(uuid())
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id])
+
+  name  String
+  value String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
