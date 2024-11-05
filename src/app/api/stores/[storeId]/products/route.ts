@@ -10,10 +10,22 @@ export const GET = async (
 ) => {
   try {
     const { params: sendParams } = params;
+    const query = request.nextUrl.searchParams;
+
+    const categoryId = query.get("categoryId") ?? undefined;
+    const sizeId = query.get("sizeId") ?? undefined;
+    const colorId = query.get("colorId") ?? undefined;
+    const isArchived = !!query.get("isArchived");
+    const isFeatured = !!query.get("isFeatured");
 
     const products = await prisma.product.findMany({
       where: {
         storeId: sendParams.storeId,
+        categoryId,
+        sizeId,
+        colorId,
+        isArchived,
+        isFeatured,
       },
       include: {
         category: true,
