@@ -4,6 +4,38 @@ import { createProductSchema } from "@/features/products/core/validations";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  params: { params: { storeId: string } }
+) => {
+  try {
+    const { params: sendParams } = params;
+
+    const products = await prisma.product.findMany({
+      where: {
+        storeId: sendParams.storeId,
+      },
+      include: {
+        category: true,
+        images: true,
+        size: true,
+        color: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    console.log(products);
+
+    return NextResponse.json(products);
+  } catch (error) {
+    console.error("[PRODUCT_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const POST = async (
   request: NextRequest,
   params: { params: { storeId: string } }
