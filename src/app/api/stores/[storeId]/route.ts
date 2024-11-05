@@ -6,12 +6,16 @@ import { createStoreSchema } from "@/features/store/core/validations";
 
 import prisma from "@/lib/db";
 
-export const PATCH = async (request: NextRequest) => {
+export const PATCH = async (
+  request: NextRequest,
+  params: { params: { storeId: string } }
+) => {
   try {
     const { userId } = auth();
     const body = await request.json();
 
     const { name } = body;
+    const { storeId } = params.params;
 
     if (!userId)
       return NextResponse.json({ error: "UnAuthorized" }, { status: 401 });
@@ -21,14 +25,17 @@ export const PATCH = async (request: NextRequest) => {
     if (!validation.success)
       return NextResponse.json(validation.error.format(), { status: 400 });
 
-    const newStore = await prisma.store.create({
+    const updatedStore = await prisma.store.update({
+      where: {
+        id: storeId,
+      },
       data: {
         userId,
         name,
       },
     });
 
-    return NextResponse.json(newStore, { status: 201 });
+    return NextResponse.json(updatedStore, { status: 201 });
   } catch (error) {
     console.error("[STORE_ERROR]", error);
 

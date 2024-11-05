@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Store } from "@prisma/client";
+import type { Store } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { TSettingsFormData } from "@/features/settings/core/types";
+import type { TSettingsFormData } from "@/features/settings/core/types";
 import { settingsFormSchema } from "@/features/settings/core/validations";
 
 import { Button } from "@/components/ui/button";
@@ -36,7 +36,7 @@ const SettingsForm = ({ store }: { store: Store }) => {
     try {
       setIsLoading(true);
       await axios.patch(`/api/stores/${store.id}`, values);
-      toast.success("Store has been updated.");
+      toast.success("Store has been edited.");
 
       router.refresh();
     } catch {

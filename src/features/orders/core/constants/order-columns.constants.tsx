@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import { TOrderColumn } from "@/features/orders/core/types";
+import type { TOrderColumn } from "@/features/orders/core/types";
 
 const ORDER_COLUMNS: ColumnDef<TOrderColumn>[] = [
   {

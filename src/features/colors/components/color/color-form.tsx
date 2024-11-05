@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { TColorFormData } from "@/features/colors/core/types";
+import type { TColorFormData } from "@/features/colors/core/types";
 import { createColorSchema } from "@/features/colors/core/validations";
 
 import { Button } from "@/components/ui/button";

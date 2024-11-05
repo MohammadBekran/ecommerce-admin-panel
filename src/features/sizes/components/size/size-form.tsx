@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { TSizeFormData } from "@/features/sizes/core/types";
+import type { TSizeFormData } from "@/features/sizes/core/types";
 import { createSizeSchema } from "@/features/sizes/core/validations";
 
 import { Button } from "@/components/ui/button";

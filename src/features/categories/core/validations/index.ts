@@ -1,1 +1,1 @@
-export { default as createCategorySchema } from "./create-category.validation";
+export { default as createCategorySchema } from "@/features/categories/core/validations/create-category.validation";

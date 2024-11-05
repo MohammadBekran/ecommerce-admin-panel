@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { TBillboardFormData } from "@/features/billboards/core/types";
+import type { TBillboardFormData } from "@/features/billboards/core/types";
 import { createBillboardSchema } from "@/features/billboards/core/validations";
 
 import { Button } from "@/components/ui/button";

@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-import SIZE_COLUMNS from "@/features/sizes/core/constants/size-columns.constants";
+import { SIZE_COLUMNS } from "@/features/sizes/core/constants";
 import type { TSizeColumn } from "@/features/sizes/core/types";
 
 import ApiList from "@/components/ui/api-list";

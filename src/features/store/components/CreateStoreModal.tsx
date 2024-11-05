@@ -1,6 +1,6 @@
 "use client";
 
-import { useCreateStoreModal } from "@/features/store/hooks";
+import { useCreateStoreModal } from "@/features/store/core/hooks";
 
 import Modal from "@/components/ui/modal";
 import CreateStoreForm from "@/features/store/components/CreateStoreForm";

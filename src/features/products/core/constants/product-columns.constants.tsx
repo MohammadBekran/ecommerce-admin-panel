@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import deleteProduct from "@/features/products/core/services/api/delete-product.api";
+import { deleteProduct } from "@/features/products/core/services/api";
 import type { TProductColumn } from "@/features/products/core/types";
 
 import CellAction from "@/components/ui/cell-action";

@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 
 import { COLOR_COLUMNS } from "@/features/colors/core/constants";
-import { TColorColumn } from "@/features/colors/core/types";
+import type { TColorColumn } from "@/features/colors/core/types";
 
 import ApiList from "@/components/ui/api-list";
 import { Button } from "@/components/ui/button";

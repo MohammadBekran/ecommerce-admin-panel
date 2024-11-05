@@ -2,10 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
-import createStore from "@/features/store/core/services/api/create-store.api";
-import { TCreateStoreFields } from "@/features/store/core/types";
+import { useCreateStoreModal } from "@/features/store/core/hooks";
+import { createStore } from "@/features/store/core/services/api";
+import type { TCreateStoreFields } from "@/features/store/core/types";
 import { createStoreSchema } from "@/features/store/core/validations";
-import { useCreateStoreModal } from "@/features/store/hooks";
 
 import { Button } from "@/components/ui/button";
 import {

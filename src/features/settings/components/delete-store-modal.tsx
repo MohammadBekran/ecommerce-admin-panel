@@ -1,7 +1,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-import deleteStore from "@/features/settings/core/services/api/delete-store.api";
+import { deleteStore } from "@/features/settings/core/services/api";
 
 import AlertModal from "@/components/ui/alert-modal";
 

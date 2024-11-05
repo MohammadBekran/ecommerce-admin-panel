@@ -1,5 +1,5 @@
 import Categories from "@/features/categories/components";
-import TCategoryColumn from "@/features/categories/core/types";
+import type { TCategoryColumn } from "@/features/categories/core/types";
 
 import dateTimeFormatter from "@/core/utils/date-formatter.utils";
 import prisma from "@/lib/db";

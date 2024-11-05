@@ -1,5 +1,5 @@
+import type { Store } from "@prisma/client";
 import axios from "axios";
-import { Store } from "@prisma/client";
 
 import { toast } from "@/core/utils";
 

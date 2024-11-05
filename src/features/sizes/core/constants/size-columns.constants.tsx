@@ -2,8 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import deleteSize from "@/features/sizes/core/services/api/delete-size.api";
-import { TSizeColumn } from "@/features/sizes/core/types";
+import { deleteSize } from "@/features/sizes/core/services/api";
+import type { TSizeColumn } from "@/features/sizes/core/types";
 
 import CellAction from "@/components/ui/cell-action";
 

@@ -1,5 +1,5 @@
 import Billboards from "@/features/billboards/components";
-import TBillboardColumn from "@/features/billboards/core/types/billboard-column.type";
+import type { TBillboardColumn } from "@/features/billboards/core/types";
 
 import dateTimeFormatter from "@/core/utils/date-formatter.utils";
 import prisma from "@/lib/db";
@@ -8,6 +8,9 @@ const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
   const billboards = await prisma.billboard.findMany({
     where: {
       storeId: params.storeId,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 

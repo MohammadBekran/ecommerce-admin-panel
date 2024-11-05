@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-import BILLBOARDS_COLUMNS from "@/features/billboards/core/constants/billboard-columns.constants";
-import type TBillboardColumns from "@/features/billboards/core/types/billboard-column.type";
+import { BILLBOARDS_COLUMNS } from "@/features/billboards/core/constants";
+import type { TBillboardColumn } from "@/features/billboards/core/types";
 
 import ApiList from "@/components/ui/api-list";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 
 interface IBillboardsProps {
   storeId: string;
-  billboards: TBillboardColumns[];
+  billboards: TBillboardColumn[];
 }
 
 const Billboards = ({ storeId, billboards }: IBillboardsProps) => {
