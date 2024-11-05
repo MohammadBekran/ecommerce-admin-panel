@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-import { TCategoryColumn } from "@/features/categories/core/types";
+import type { TCategoryColumn } from "@/features/categories/core/types";
 import { CATEGORY_COLUMNS } from "@/features/categories/core/constants";
 
 import ApiList from "@/components/ui/api-list";

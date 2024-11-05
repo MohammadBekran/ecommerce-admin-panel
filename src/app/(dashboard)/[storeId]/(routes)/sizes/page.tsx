@@ -1,5 +1,5 @@
 import Sizes from "@/features/sizes/components";
-import { TSizeColumn } from "@/features/sizes/core/types";
+import type { TSizeColumn } from "@/features/sizes/core/types";
 
 import dateTimeFormatter from "@/core/utils/date-formatter.utils";
 import prisma from "@/lib/db";

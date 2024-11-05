@@ -4,15 +4,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { Category, Color, Image, Product, Size } from "@prisma/client";
 import axios from "axios";
 import { Trash } from "lucide-react";
+import NextImage from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import NextImage from "next/image";
 
-import { TProductFormData } from "@/features/products/core/types";
+import type { TProductFormData } from "@/features/products/core/types";
 import { createProductSchema } from "@/features/products/core/validations";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -32,7 +33,6 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/core/utils";
 import { UploadDropzone } from "@/lib/uploadthing";
-import { Checkbox } from "@/components/ui/checkbox";
 
 interface IProductFormProps {
   product: ((Product & { images: Image[] }) | null) | undefined;

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { useCreateStoreModal } from "@/features/store/hooks";
+import { useCreateStoreModal } from "@/features/store/core/hooks";
 
 const HomePage = () => {
   const { open, onOpen } = useCreateStoreModal();

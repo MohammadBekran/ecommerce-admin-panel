@@ -1,1 +1,1 @@
-export { default as createStoreSchema } from "./create-store.validation";
+export { default as createStoreSchema } from "@/features/store/core/validations/create-store.validation";

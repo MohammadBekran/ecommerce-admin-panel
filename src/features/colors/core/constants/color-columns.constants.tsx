@@ -2,8 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import deleteColor from "@/features/colors/core/services/api/delete-color.api";
-import { TColorColumn } from "@/features/colors/core/types";
+import { deleteColor } from "@/features/colors/core/services/api";
+import type { TColorColumn } from "@/features/colors/core/types";
 
 import CellAction from "@/components/ui/cell-action";
 import Color from "@/components/ui/color";

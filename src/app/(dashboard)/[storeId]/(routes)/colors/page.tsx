@@ -1,5 +1,5 @@
 import Colors from "@/features/colors/components";
-import { TColorColumn } from "@/features/colors/core/types";
+import type { TColorColumn } from "@/features/colors/core/types";
 
 import dateTimeFormatter from "@/core/utils/date-formatter.utils";
 import prisma from "@/lib/db";

@@ -2,8 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import deleteCategory from "@/features/categories/core/services/api/delete-category.api";
-import { TCategoryColumn } from "@/features/categories/core/types";
+import { deleteCategory } from "@/features/categories/core/services/api";
+import type { TCategoryColumn } from "@/features/categories/core/types";
 
 import CellAction from "@/components/ui/cell-action";
 

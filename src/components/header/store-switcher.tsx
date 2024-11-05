@@ -4,7 +4,7 @@ import { Check, ChevronsUpDown, PlusCircle, StoreIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { useCreateStoreModal } from "@/features/store/hooks";
+import { useCreateStoreModal } from "@/features/store/core/hooks";
 
 import { Button } from "@/components/ui/button";
 import {
