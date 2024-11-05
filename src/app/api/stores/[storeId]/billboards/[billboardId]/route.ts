@@ -3,6 +3,29 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  params: { params: { billboardId: string } }
+) => {
+  try {
+    const { params: sendParams } = params;
+
+    const billboard = await prisma.billboard.findUnique({
+      where: {
+        id: sendParams.billboardId,
+      },
+    });
+
+    console.log(billboard);
+
+    return NextResponse.json(billboard);
+  } catch (error) {
+    console.error("[BILLBOARD_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const PATCH = async (
   request: NextRequest,
   params: { params: { storeId: string; billboardId: string } }
