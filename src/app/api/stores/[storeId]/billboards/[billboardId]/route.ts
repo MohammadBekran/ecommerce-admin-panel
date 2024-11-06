@@ -5,16 +5,21 @@ import prisma from "@/lib/db";
 
 export const GET = async (
   request: NextRequest,
-  params: { params: { billboardId: string } }
+  { params }: { params: { billboardId: string } }
 ) => {
   try {
-    const { params: sendParams } = params;
-
     const billboard = await prisma.billboard.findUnique({
       where: {
-        id: sendParams.billboardId,
+        id: params.billboardId,
       },
     });
+
+    if (!billboard) {
+      return NextResponse.json(
+        { message: "Invalid billboard" },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(billboard);
   } catch (error) {
@@ -26,33 +31,32 @@ export const GET = async (
 
 export const PATCH = async (
   request: NextRequest,
-  params: { params: { storeId: string; billboardId: string } }
+  { params }: { params: { storeId: string; billboardId: string } }
 ) => {
   try {
     const { label, imageUrl } = await request.json();
-    const { params: sendParams } = params;
     const { userId } = auth();
 
     if (!userId) {
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
 
-    if (!sendParams.billboardId) {
+    if (!params.billboardId) {
       return NextResponse.json(
         { message: "BillboardId is required." },
         { status: 400 }
       );
     }
 
-    if (!sendParams.storeId) {
+    if (!params.storeId) {
       return NextResponse.json(
-        { message: "storeId is required." },
+        { message: "StoreId is required." },
         { status: 400 }
       );
     }
 
     const billboard = await prisma.billboard.findUnique({
-      where: { id: sendParams.billboardId, storeId: sendParams.storeId },
+      where: { id: params.billboardId, storeId: params.storeId },
     });
 
     if (!billboard) {
@@ -64,8 +68,8 @@ export const PATCH = async (
 
     const updatedBillboard = await prisma.billboard.update({
       where: {
-        id: sendParams.billboardId,
-        storeId: sendParams.storeId,
+        id: params.billboardId,
+        storeId: params.storeId,
       },
       data: {
         label,
@@ -86,7 +90,7 @@ export const PATCH = async (
 
 export const DELETE = async (
   request: NextRequest,
-  params: { params: { storeId: string; billboardId: string } }
+  { params }: { params: { storeId: string; billboardId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -94,9 +98,7 @@ export const DELETE = async (
     if (!userId)
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
 
-    const { params: sendParams } = params;
-
-    const where = { id: sendParams.billboardId, storeId: sendParams.storeId };
+    const where = { id: params.billboardId, storeId: params.storeId };
 
     const billboard = await prisma.billboard.findUnique({
       where,

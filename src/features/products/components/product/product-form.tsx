@@ -189,7 +189,7 @@ const ProductForm = ({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="name" {...field} />
+                  <Input disabled={isLoading} placeholder="name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -316,6 +316,7 @@ const ProductForm = ({
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
                   <Checkbox
+                    disabled={isLoading}
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
@@ -336,6 +337,7 @@ const ProductForm = ({
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
                   <Checkbox
+                    disabled={isLoading}
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />

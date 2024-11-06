@@ -1,7 +1,7 @@
 import Billboards from "@/features/billboards/components";
 import type { TBillboardColumn } from "@/features/billboards/core/types";
 
-import dateTimeFormatter from "@/core/utils/date-formatter.utils";
+import { dateTimeFormatter } from "@/core/utils";
 import prisma from "@/lib/db";
 
 const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
@@ -18,7 +18,7 @@ const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
     (billboard) => ({
       id: billboard.id,
       label: billboard.label,
-      createdAt: dateTimeFormatter(billboard.createdAt),
+      createdAt: dateTimeFormatter.format(billboard.createdAt),
     })
   );
 

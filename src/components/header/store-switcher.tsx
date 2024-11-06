@@ -22,7 +22,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { IStoreItem } from "@/core/types";
-import { cn } from "@/lib/utils";
+import { cn } from "@/core/utils";
 
 interface IStoreSwitcherProps {
   stores: IStoreItem[];

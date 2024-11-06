@@ -72,7 +72,7 @@ const SizeForm = ({ size, storeId }: ISizeFromProps) => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="name" {...field} />
+                  <Input disabled={isLoading} placeholder="name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -85,7 +85,7 @@ const SizeForm = ({ size, storeId }: ISizeFromProps) => {
               <FormItem>
                 <FormLabel>Value</FormLabel>
                 <FormControl>
-                  <Input placeholder="value" {...field} />
+                  <Input disabled={isLoading} placeholder="value" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

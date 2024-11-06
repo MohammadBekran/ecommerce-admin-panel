@@ -1,7 +1,7 @@
 import Colors from "@/features/colors/components";
 import type { TColorColumn } from "@/features/colors/core/types";
 
-import dateTimeFormatter from "@/core/utils/date-formatter.utils";
+import { dateTimeFormatter } from "@/core/utils";
 import prisma from "@/lib/db";
 
 const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
@@ -15,7 +15,7 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
     id: color.id,
     name: color.name,
     value: color.value,
-    createdAt: dateTimeFormatter(color.createdAt),
+    createdAt: dateTimeFormatter.format(color.createdAt),
   }));
 
   return <Colors storeId={params.storeId} colors={formattedColors} />;

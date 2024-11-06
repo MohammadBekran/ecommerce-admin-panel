@@ -6,6 +6,40 @@ import { createStoreSchema } from "@/features/store/core/validations";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { storeId: string } }
+) => {
+  try {
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
+
+    const store = await prisma.store.findUnique({
+      where: {
+        id: params.storeId,
+      },
+      include: {
+        Billboard: true,
+        Category: true,
+        Size: true,
+        Color: true,
+        Product: true,
+        Order: true,
+      },
+    });
+
+    return NextResponse.json(store);
+  } catch (error) {
+    console.error("[STORE_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const PATCH = async (
   request: NextRequest,
   params: { params: { storeId: string } }

@@ -42,7 +42,7 @@ const CreateStoreForm = () => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="name" {...field} />
+                <Input disabled={isPending} placeholder="name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

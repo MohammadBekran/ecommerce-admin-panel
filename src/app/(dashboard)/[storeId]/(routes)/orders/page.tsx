@@ -1,9 +1,8 @@
 import Orders from "@/features/orders/components";
 import type { TOrderColumn } from "@/features/orders/core/types";
 
-import dateTimeFormatter from "@/core/utils/date-formatter.utils";
+import { dateTimeFormatter, priceFormatter } from "@/core/utils";
 import prisma from "@/lib/db";
-import { priceFormatter } from "@/core/utils";
 
 const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
   const orders = await prisma.order.findMany({
@@ -35,7 +34,7 @@ const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
       }, 0)
     ),
     isPaid: order.isPaid,
-    createdAt: dateTimeFormatter(order.createdAt),
+    createdAt: dateTimeFormatter.format(order.createdAt),
   }));
 
   return <Orders orders={formattedOrders} />;

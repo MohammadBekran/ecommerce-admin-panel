@@ -6,10 +6,9 @@ import prisma from "@/lib/db";
 
 export const GET = async (
   request: NextRequest,
-  params: { params: { storeId: string } }
+  { params }: { params: { storeId: string } }
 ) => {
   try {
-    const { params: sendParams } = params;
     const query = request.nextUrl.searchParams;
 
     const getIsArchivedQuery = Boolean(query.get("isArchived"));
@@ -23,9 +22,16 @@ export const GET = async (
     const isFeatured =
       getIsFeaturedQuery === true ? getIsFeaturedQuery : undefined;
 
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
+
     const products = await prisma.product.findMany({
       where: {
-        storeId: sendParams.storeId,
+        storeId: params.storeId,
         categoryId,
         sizeId,
         colorId,
@@ -53,7 +59,7 @@ export const GET = async (
 
 export const POST = async (
   request: NextRequest,
-  params: { params: { storeId: string } }
+  { params }: { params: { storeId: string } }
 ) => {
   try {
     const body = await request.json();
@@ -68,7 +74,13 @@ export const POST = async (
       colorId,
       images,
     } = body;
-    const { params: sendParams } = params;
+
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
 
     const validation = createProductSchema.safeParse(body);
 
@@ -77,7 +89,7 @@ export const POST = async (
 
     const newStore = await prisma.product.create({
       data: {
-        storeId: sendParams.storeId,
+        storeId: params.storeId,
         name,
         price,
         isFeatured,
@@ -95,7 +107,7 @@ export const POST = async (
 
     return NextResponse.json(newStore, { status: 201 });
   } catch (error) {
-    console.error("[BILLBOARD_ERROR]", error);
+    console.error("[PRODUCT_ERROR]", error);
 
     return NextResponse.json("Internal server error", { status: 500 });
   }

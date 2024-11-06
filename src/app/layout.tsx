@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
 
-import ClerkProvider from "@/components/partials/providers/ClerkProvider";
-import ModalProvider from "@/components/partials/providers/ModalProvider";
-import ToasterProvider from "@/components/partials/providers/ToasterProvider";
-import { ThemeProvider } from "@/components/partials/providers/ThemeProvider";
+import ClerkProvider from "@/components/partials/providers/clerk-provider";
+import ModalProvider from "@/components/partials/providers/modal-provider";
+import ThemeProvider from "@/components/partials/providers/theme-provider";
+import ToastProvider from "@/components/partials/providers/toast-provider";
 
 import "./globals.css";
 
@@ -24,11 +24,11 @@ export default async function RootLayout({
         <body className="antialiased">
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            <ToasterProvider />
+            <ToastProvider />
             <ModalProvider />
             {children}
           </ThemeProvider>

@@ -6,14 +6,12 @@ import prisma from "@/lib/db";
 
 export const GET = async (
   request: NextRequest,
-  params: { params: { storeId: string } }
+  { params }: { params: { storeId: string } }
 ) => {
   try {
-    const { params: sendParams } = params;
-
     const categories = await prisma.category.findMany({
       where: {
-        storeId: sendParams.storeId,
+        storeId: params.storeId,
       },
       orderBy: {
         createdAt: "desc",
@@ -30,28 +28,34 @@ export const GET = async (
 
 export const POST = async (
   request: NextRequest,
-  params: { params: { storeId: string } }
+  { params }: { params: { storeId: string } }
 ) => {
   try {
     const body = await request.json();
 
     const { name, billboardId } = body;
-    const { params: sendParams } = params;
+
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
 
     const validation = createCategorySchema.safeParse(body);
 
     if (!validation.success)
       return NextResponse.json(validation.error.format(), { status: 400 });
 
-    const newStore = await prisma.category.create({
+    const newCategory = await prisma.category.create({
       data: {
-        storeId: sendParams.storeId,
+        storeId: params.storeId,
         name,
         billboardId,
       },
     });
 
-    return NextResponse.json(newStore, { status: 201 });
+    return NextResponse.json(newCategory, { status: 201 });
   } catch (error) {
     console.error("[CATEGORY_ERROR]", error);
 

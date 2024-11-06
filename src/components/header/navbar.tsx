@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
 import MENU_ITEMS from "@/core/constants/menu-items.constants";
-import { cn } from "@/lib/utils";
+import { cn } from "@/core/utils";
 
 const Navbar = () => {
   const pathname = usePathname();

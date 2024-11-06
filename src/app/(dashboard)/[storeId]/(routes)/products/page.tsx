@@ -1,8 +1,7 @@
 import Products from "@/features/products/components";
 import type { TProductColumn } from "@/features/products/core/types";
 
-import { priceFormatter } from "@/core/utils";
-import dateTimeFormatter from "@/core/utils/date-formatter.utils";
+import { dateTimeFormatter, priceFormatter } from "@/core/utils";
 import prisma from "@/lib/db";
 
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
@@ -29,7 +28,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     category: product.category.name,
     size: product.size.name,
     color: product.color.value,
-    createdAt: dateTimeFormatter(product.createdAt),
+    createdAt: dateTimeFormatter.format(product.createdAt),
   }));
 
   return <Products storeId={params.storeId} products={formattedBillboards} />;

@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { createSizeSchema } from "@/features/sizes/core/validations";
-
 import prisma from "@/lib/db";
 
 export const GET = async (
@@ -16,21 +14,21 @@ export const GET = async (
       );
     }
 
-    const sizes = await prisma.size.findMany({
+    const orders = await prisma.order.findMany({
       where: {
         storeId: params.storeId,
       },
       include: {
-        Product: true,
+        orderItems: true,
       },
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    return NextResponse.json(sizes);
+    return NextResponse.json(orders);
   } catch (error) {
-    console.error("[SIZE_ERROR]", error);
+    console.error("[ORDER_ERROR]", error);
 
     return NextResponse.json("Internal server error", { status: 500 });
   }
@@ -43,7 +41,7 @@ export const POST = async (
   try {
     const body = await request.json();
 
-    const { name, value } = body;
+    const { productIds, phone, address, isPaid } = body;
 
     if (!params.storeId) {
       return NextResponse.json(
@@ -52,22 +50,42 @@ export const POST = async (
       );
     }
 
-    const validation = createSizeSchema.safeParse(body);
-
-    if (!validation.success)
-      return NextResponse.json(validation.error.format(), { status: 400 });
-
-    const newSize = await prisma.size.create({
-      data: {
-        storeId: params.storeId,
-        name,
-        value,
+    const products = await prisma.product.findMany({
+      where: {
+        id: {
+          in: productIds,
+        },
       },
     });
 
-    return NextResponse.json(newSize, { status: 201 });
+    if (!products || products.length === 0) {
+      return NextResponse.json(
+        { message: "Invalid products." },
+        { status: 400 }
+      );
+    }
+
+    const newOrder = await prisma.order.create({
+      data: {
+        storeId: params.storeId,
+        address,
+        phone,
+        isPaid,
+        orderItems: {
+          create: productIds.map((productId: string) => ({
+            product: {
+              connect: {
+                id: productId,
+              },
+            },
+          })),
+        },
+      },
+    });
+
+    return NextResponse.json(newOrder, { status: 201 });
   } catch (error) {
-    console.error("[SIZE_ERROR]", error);
+    console.error("[ORDER_ERROR]", error);
 
     return NextResponse.json("Internal server error", { status: 500 });
   }

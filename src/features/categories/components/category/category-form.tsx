@@ -87,7 +87,11 @@ const CategoryForm = ({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Category name" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="Category name"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

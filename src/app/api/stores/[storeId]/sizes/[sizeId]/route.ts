@@ -3,35 +3,71 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { storeId: string; sizeId: string } }
+) => {
+  try {
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
+
+    if (!params.sizeId) {
+      return NextResponse.json(
+        { message: "SizeId is required." },
+        { status: 400 }
+      );
+    }
+
+    const size = await prisma.size.findUnique({
+      where: {
+        storeId: params.storeId,
+        id: params.sizeId,
+      },
+      include: {
+        Product: true,
+      },
+    });
+
+    return NextResponse.json(size);
+  } catch (error) {
+    console.error("[SIZE_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const PATCH = async (
   request: NextRequest,
-  params: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } }
 ) => {
   try {
     const { name, value } = await request.json();
-    const { params: sendParams } = params;
     const { userId } = auth();
 
     if (!userId) {
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
 
-    if (!sendParams.sizeId) {
+    if (!params.storeId) {
       return NextResponse.json(
-        { message: "sizeId is required." },
+        { message: "StoreId is required." },
         { status: 400 }
       );
     }
 
-    if (!sendParams.storeId) {
+    if (!params.sizeId) {
       return NextResponse.json(
-        { message: "storeId is required." },
+        { message: "SizeId is required." },
         { status: 400 }
       );
     }
 
     const size = await prisma.size.findUnique({
-      where: { id: sendParams.sizeId, storeId: sendParams.storeId },
+      where: { id: params.sizeId, storeId: params.storeId },
     });
 
     if (!size) {
@@ -40,8 +76,8 @@ export const PATCH = async (
 
     const updatedSize = await prisma.size.update({
       where: {
-        id: sendParams.sizeId,
-        storeId: sendParams.storeId,
+        id: params.sizeId,
+        storeId: params.storeId,
       },
       data: {
         name,
@@ -62,7 +98,7 @@ export const PATCH = async (
 
 export const DELETE = async (
   request: NextRequest,
-  params: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -70,9 +106,21 @@ export const DELETE = async (
     if (!userId)
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
 
-    const { params: sendParams } = params;
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
 
-    const where = { id: sendParams.sizeId, storeId: sendParams.storeId };
+    if (!params.sizeId) {
+      return NextResponse.json(
+        { message: "SizeId is required." },
+        { status: 400 }
+      );
+    }
+
+    const where = { id: params.sizeId, storeId: params.storeId };
 
     const size = await prisma.size.findUnique({
       where,

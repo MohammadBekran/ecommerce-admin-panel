@@ -5,14 +5,19 @@ import prisma from "@/lib/db";
 
 export const GET = async (
   request: NextRequest,
-  params: { params: { categoryId: string } }
+  { params }: { params: { categoryId: string } }
 ) => {
   try {
-    const { params: sendParams } = params;
+    if (!params.categoryId) {
+      return NextResponse.json(
+        { message: "CategoryId is required." },
+        { status: 400 }
+      );
+    }
 
     const category = await prisma.category.findUnique({
       where: {
-        id: sendParams.categoryId,
+        id: params.categoryId,
       },
       include: {
         billboard: true,
@@ -29,46 +34,45 @@ export const GET = async (
 
 export const PATCH = async (
   request: NextRequest,
-  params: { params: { storeId: string; categoryId: string } }
+  { params }: { params: { storeId: string; categoryId: string } }
 ) => {
   try {
     const { name, billboardId } = await request.json();
-    const { params: sendParams } = params;
     const { userId } = auth();
 
     if (!userId) {
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
 
-    if (!sendParams.categoryId) {
+    if (!params.categoryId) {
       return NextResponse.json(
         { message: "CategoryId is required." },
         { status: 400 }
       );
     }
 
-    if (!sendParams.storeId) {
+    if (!params.storeId) {
       return NextResponse.json(
         { message: "storeId is required." },
         { status: 400 }
       );
     }
 
-    const billboard = await prisma.category.findUnique({
-      where: { id: sendParams.categoryId, storeId: sendParams.storeId },
+    const category = await prisma.category.findUnique({
+      where: { id: params.categoryId, storeId: params.storeId },
     });
 
-    if (!billboard) {
+    if (!category) {
       return NextResponse.json(
-        { message: "Invalid billboard" },
+        { message: "Invalid category" },
         { status: 404 }
       );
     }
 
-    const updatedBillboard = await prisma.category.update({
+    const updatedCategory = await prisma.category.update({
       where: {
-        id: sendParams.categoryId,
-        storeId: sendParams.storeId,
+        id: params.categoryId,
+        storeId: params.storeId,
       },
       data: {
         name,
@@ -76,7 +80,7 @@ export const PATCH = async (
       },
     });
 
-    return NextResponse.json(updatedBillboard);
+    return NextResponse.json(updatedCategory);
   } catch (error) {
     console.error("[CATEGORY_ERROR]", error);
 
@@ -89,7 +93,7 @@ export const PATCH = async (
 
 export const DELETE = async (
   request: NextRequest,
-  params: { params: { storeId: string; categoryId: string } }
+  { params }: { params: { storeId: string; categoryId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -97,17 +101,15 @@ export const DELETE = async (
     if (!userId)
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
 
-    const { params: sendParams } = params;
+    const where = { id: params.categoryId, storeId: params.storeId };
 
-    const where = { id: sendParams.categoryId, storeId: sendParams.storeId };
-
-    const billboard = await prisma.category.findUnique({
+    const category = await prisma.category.findUnique({
       where,
     });
 
-    if (!billboard)
+    if (!category)
       return NextResponse.json(
-        { message: "Invalid billboard" },
+        { message: "Invalid category" },
         { status: 404 }
       );
 

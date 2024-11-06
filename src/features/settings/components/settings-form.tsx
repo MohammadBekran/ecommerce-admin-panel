@@ -60,7 +60,7 @@ const SettingsForm = ({ store }: { store: Store }) => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="name" {...field} />
+                <Input disabled={isLoading} placeholder="name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

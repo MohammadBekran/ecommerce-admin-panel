@@ -3,7 +3,7 @@
 import { useCreateStoreModal } from "@/features/store/core/hooks";
 
 import Modal from "@/components/ui/modal";
-import CreateStoreForm from "@/features/store/components/CreateStoreForm";
+import CreateStoreForm from "@/features/store/components/create-store-form";
 
 const CreateStoreModal = () => {
   const { open, onClose } = useCreateStoreModal();

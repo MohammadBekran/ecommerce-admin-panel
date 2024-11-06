@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 
-const ToasterProvider = () => {
+const ToastProvider = () => {
   return <Toaster />;
 };
 
-export default ToasterProvider;
+export default ToastProvider;

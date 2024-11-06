@@ -138,7 +138,7 @@ const BillboardForm = ({ billboard, storeId }: IBillboardFormProps) => {
             <FormItem>
               <FormLabel>Label</FormLabel>
               <FormControl>
-                <Input placeholder="label" {...field} />
+                <Input disabled={isLoading} placeholder="label" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

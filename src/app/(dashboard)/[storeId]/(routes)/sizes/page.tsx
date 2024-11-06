@@ -1,7 +1,7 @@
 import Sizes from "@/features/sizes/components";
 import type { TSizeColumn } from "@/features/sizes/core/types";
 
-import dateTimeFormatter from "@/core/utils/date-formatter.utils";
+import { dateTimeFormatter } from "@/core/utils";
 import prisma from "@/lib/db";
 
 const SizesPage = async ({ params }: { params: { storeId: string } }) => {
@@ -15,7 +15,7 @@ const SizesPage = async ({ params }: { params: { storeId: string } }) => {
     id: size.id,
     name: size.name,
     value: size.value,
-    createdAt: dateTimeFormatter(size.createdAt),
+    createdAt: dateTimeFormatter.format(size.createdAt),
   }));
 
   return <Sizes storeId={params.storeId} sizes={formattedSizes} />;

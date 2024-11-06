@@ -3,35 +3,63 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { colorId: string } }
+) => {
+  try {
+    if (!params.colorId) {
+      return NextResponse.json(
+        { message: "ColorId is required." },
+        { status: 400 }
+      );
+    }
+
+    const color = await prisma.color.findUnique({
+      where: {
+        id: params.colorId,
+      },
+      include: {
+        Product: true,
+      },
+    });
+
+    return NextResponse.json(color);
+  } catch (error) {
+    console.error("[COLOR_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const PATCH = async (
   request: NextRequest,
-  params: { params: { storeId: string; colorId: string } }
+  { params }: { params: { storeId: string; colorId: string } }
 ) => {
   try {
     const { name, value } = await request.json();
-    const { params: sendParams } = params;
     const { userId } = auth();
 
     if (!userId) {
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
 
-    if (!sendParams.colorId) {
+    if (!params.colorId) {
       return NextResponse.json(
-        { message: "colorId is required." },
+        { message: "ColorId is required." },
         { status: 400 }
       );
     }
 
-    if (!sendParams.storeId) {
+    if (!params.storeId) {
       return NextResponse.json(
-        { message: "storeId is required." },
+        { message: "StoreId is required." },
         { status: 400 }
       );
     }
 
     const color = await prisma.color.findUnique({
-      where: { id: sendParams.colorId, storeId: sendParams.storeId },
+      where: { id: params.colorId, storeId: params.storeId },
     });
 
     if (!color) {
@@ -40,8 +68,8 @@ export const PATCH = async (
 
     const updatedSize = await prisma.color.update({
       where: {
-        id: sendParams.colorId,
-        storeId: sendParams.storeId,
+        id: params.colorId,
+        storeId: params.storeId,
       },
       data: {
         name,
@@ -62,7 +90,7 @@ export const PATCH = async (
 
 export const DELETE = async (
   request: NextRequest,
-  params: { params: { storeId: string; colorId: string } }
+  { params }: { params: { storeId: string; colorId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -70,9 +98,21 @@ export const DELETE = async (
     if (!userId)
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
 
-    const { params: sendParams } = params;
+    if (!params.colorId) {
+      return NextResponse.json(
+        { message: "ColorId is required." },
+        { status: 400 }
+      );
+    }
 
-    const where = { id: sendParams.colorId, storeId: sendParams.storeId };
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
+
+    const where = { id: params.colorId, storeId: params.storeId };
 
     const color = await prisma.color.findUnique({
       where,

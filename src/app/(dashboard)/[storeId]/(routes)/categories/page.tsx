@@ -1,7 +1,7 @@
 import Categories from "@/features/categories/components";
 import type { TCategoryColumn } from "@/features/categories/core/types";
 
-import dateTimeFormatter from "@/core/utils/date-formatter.utils";
+import { dateTimeFormatter } from "@/core/utils";
 import prisma from "@/lib/db";
 
 const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
@@ -21,7 +21,7 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
     id: category.id,
     name: category.name,
     billboardLabel: category.billboard.label,
-    createdAt: dateTimeFormatter(category.createdAt),
+    createdAt: dateTimeFormatter.format(category.createdAt),
   }));
 
   return (

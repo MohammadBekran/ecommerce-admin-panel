@@ -33,7 +33,7 @@ model Billboard {
   id String @id @default(uuid())
 
   storeId String
-  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store   Store  @relation(fields: [storeId], references: [id])
 
   label    String
   imageUrl String
@@ -47,10 +47,10 @@ model Category {
   id String @id @default(uuid())
 
   storeId String
-  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store   Store  @relation(fields: [storeId], references: [id])
 
   billboardId String
-  billboard   Billboard @relation(fields: [billboardId], references: [id], onDelete: Cascade)
+  billboard   Billboard @relation(fields: [billboardId], references: [id])
 
   name    String
   Product Product[]
@@ -77,7 +77,7 @@ model Color {
   id String @id @default(uuid())
 
   storeId String
-  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store   Store  @relation(fields: [storeId], references: [id])
 
   name    String
   value   String
@@ -91,10 +91,10 @@ model Product {
   id String @id @default(uuid())
 
   storeId String
-  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store   Store  @relation(fields: [storeId], references: [id])
 
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id])
 
   name       String
   price      Decimal
@@ -102,7 +102,7 @@ model Product {
   isArchived Boolean @default(false)
 
   sizeId String
-  size   Size   @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+  size   Size   @relation(fields: [sizeId], references: [id])
 
   colorId String
   color   Color  @relation(fields: [colorId], references: [id])

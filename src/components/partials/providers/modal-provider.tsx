@@ -1,4 +1,4 @@
-import CreateStoreModal from "@/features/store/components/CreateStoreModal";
+import CreateStoreModal from "@/features/store/components/create-store-modal";
 
 const ModalProvider = () => {
   return <CreateStoreModal />;

@@ -6,14 +6,19 @@ import prisma from "@/lib/db";
 
 export const GET = async (
   request: NextRequest,
-  params: { params: { storeId: string } }
+  { params }: { params: { storeId: string } }
 ) => {
   try {
-    const { params: sendParams } = params;
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
 
     const colors = await prisma.color.findMany({
       where: {
-        storeId: sendParams.storeId,
+        storeId: params.storeId,
       },
       orderBy: {
         createdAt: "desc",
@@ -30,13 +35,19 @@ export const GET = async (
 
 export const POST = async (
   request: NextRequest,
-  params: { params: { storeId: string } }
+  { params }: { params: { storeId: string } }
 ) => {
   try {
     const body = await request.json();
 
     const { name, value } = body;
-    const { params: sendParams } = params;
+
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
 
     const validation = createColorSchema.safeParse(body);
 
@@ -45,7 +56,7 @@ export const POST = async (
 
     const newColor = await prisma.color.create({
       data: {
-        storeId: sendParams.storeId,
+        storeId: params.storeId,
         name,
         value,
       },

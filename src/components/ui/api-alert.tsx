@@ -5,7 +5,7 @@ import { Copy, Server } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import copyText from "@/core/utils/copy-text.utils";
+import { copyText } from "@/core/utils";
 
 interface IApiAlertProps {
   title: string;

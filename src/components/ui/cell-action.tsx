@@ -13,7 +13,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import copyText from "@/core/utils/copy-text.utils";
+import { copyText } from "@/core/utils";
 
 interface ICellActionProps<T> {
   data: T;
