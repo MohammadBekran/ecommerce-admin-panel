@@ -3,6 +3,30 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  params: { params: { categoryId: string } }
+) => {
+  try {
+    const { params: sendParams } = params;
+
+    const category = await prisma.category.findUnique({
+      where: {
+        id: sendParams.categoryId,
+      },
+      include: {
+        billboard: true,
+      },
+    });
+
+    return NextResponse.json(category);
+  } catch (error) {
+    console.error("[CATEGORY_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const PATCH = async (
   request: NextRequest,
   params: { params: { storeId: string; categoryId: string } }
