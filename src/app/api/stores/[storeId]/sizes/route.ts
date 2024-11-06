@@ -4,6 +4,30 @@ import { createSizeSchema } from "@/features/sizes/core/validations";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  params: { params: { storeId: string } }
+) => {
+  try {
+    const { params: sendParams } = params;
+
+    const sizes = await prisma.size.findMany({
+      where: {
+        storeId: sendParams.storeId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json(sizes);
+  } catch (error) {
+    console.error("[SIZE_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const POST = async (
   request: NextRequest,
   params: { params: { storeId: string } }
