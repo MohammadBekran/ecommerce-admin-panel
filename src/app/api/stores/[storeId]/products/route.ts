@@ -12,11 +12,16 @@ export const GET = async (
     const { params: sendParams } = params;
     const query = request.nextUrl.searchParams;
 
+    const getIsArchivedQuery = Boolean(query.get("isArchived"));
+    const getIsFeaturedQuery = Boolean(query.get("isFeatured"));
+
     const categoryId = query.get("categoryId") ?? undefined;
     const sizeId = query.get("sizeId") ?? undefined;
     const colorId = query.get("colorId") ?? undefined;
-    const isArchived = !!query.get("isArchived");
-    const isFeatured = !!query.get("isFeatured");
+    const isArchived =
+      getIsArchivedQuery === true ? getIsArchivedQuery : undefined;
+    const isFeatured =
+      getIsFeaturedQuery === true ? getIsFeaturedQuery : undefined;
 
     const products = await prisma.product.findMany({
       where: {
@@ -37,8 +42,6 @@ export const GET = async (
         createdAt: "desc",
       },
     });
-
-    console.log(products);
 
     return NextResponse.json(products);
   } catch (error) {

@@ -16,8 +16,6 @@ export const GET = async (
       },
     });
 
-    console.log(billboard);
-
     return NextResponse.json(billboard);
   } catch (error) {
     console.error("[BILLBOARD_ERROR]", error);

@@ -20,8 +20,6 @@ export const GET = async (
       },
     });
 
-    console.log(categories);
-
     return NextResponse.json(categories);
   } catch (error) {
     console.error("[CATEGORY_ERROR]", error);

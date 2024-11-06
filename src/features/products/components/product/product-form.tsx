@@ -108,7 +108,6 @@ const ProductForm = ({
   };
 
   const onSubmit = async (values: TProductFormData) => {
-    console.log("submitted!", values);
     try {
       setIsLoading(true);
       if (product) {
