@@ -4,6 +4,35 @@ import { createBillboardSchema } from "@/features/billboards/core/validations";
 
 import prisma from "@/lib/db";
 
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { storeId: string } }
+) => {
+  try {
+    if (!params.storeId) {
+      return NextResponse.json(
+        { message: "StoreId is required." },
+        { status: 400 }
+      );
+    }
+
+    const billboards = await prisma.billboard.findMany({
+      where: {
+        storeId: params.storeId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json(billboards);
+  } catch (error) {
+    console.error("[BILLBOARD_ERROR]", error);
+
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+};
+
 export const POST = async (
   request: NextRequest,
   { params }: { params: { storeId: string } }
