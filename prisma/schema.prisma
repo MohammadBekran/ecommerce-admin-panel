@@ -133,6 +133,7 @@ model Order {
   store   Store  @relation(fields: [storeId], references: [id])
 
   orderItems OrderItem[]
+  userId     String
   isPaid     Boolean     @default(false)
   phone      String      @default("")
   address    String      @default("")

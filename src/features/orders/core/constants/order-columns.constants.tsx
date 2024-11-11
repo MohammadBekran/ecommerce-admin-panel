@@ -6,8 +6,8 @@ import type { TOrderColumn } from "@/features/orders/core/types";
 
 const ORDER_COLUMNS: ColumnDef<TOrderColumn>[] = [
   {
-    accessorKey: "Products",
-    header: "products",
+    accessorKey: "products",
+    header: "Products",
   },
   {
     accessorKey: "phone",

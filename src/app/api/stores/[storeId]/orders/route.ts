@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/db";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export const OPTIONS = () => {
+  return NextResponse.json(
+    {},
+    {
+      headers: corsHeaders,
+    }
+  );
+};
+
 export const GET = async (
   request: NextRequest,
   { params }: { params: { storeId: string } }
@@ -41,7 +56,7 @@ export const POST = async (
   try {
     const body = await request.json();
 
-    const { productIds, phone, address, isPaid } = body;
+    const { userId, productIds, phone, address, isPaid } = body;
 
     if (!params.storeId) {
       return NextResponse.json(
@@ -68,6 +83,7 @@ export const POST = async (
     const newOrder = await prisma.order.create({
       data: {
         storeId: params.storeId,
+        userId,
         address,
         phone,
         isPaid,
@@ -83,7 +99,7 @@ export const POST = async (
       },
     });
 
-    return NextResponse.json(newOrder, { status: 201 });
+    return NextResponse.json(newOrder, { status: 201, headers: corsHeaders });
   } catch (error) {
     console.error("[ORDER_ERROR]", error);
 
