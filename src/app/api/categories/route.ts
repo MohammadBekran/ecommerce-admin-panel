@@ -10,7 +10,9 @@ export const GET = async () => {
       },
     });
 
-    return NextResponse.json(categories);
+    return NextResponse.json(categories, {
+      headers: { "Cache-Control": "no-store" },
+    });
   } catch (error) {
     console.error("[CATEGORY_ERROR]", error);
 
