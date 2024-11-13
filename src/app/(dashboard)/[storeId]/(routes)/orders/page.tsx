@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Orders from "@/features/orders/components";
 import type { TOrderColumn } from "@/features/orders/core/types";
 
@@ -38,6 +40,11 @@ const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
   }));
 
   return <Orders orders={formattedOrders} />;
+};
+
+export const metadata: Metadata = {
+  title: "Orders",
+  description: "On this page, you can see all of the orders of your store",
 };
 
 export default OrdersPage;

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Sizes from "@/features/sizes/components";
 import type { TSizeColumn } from "@/features/sizes/core/types";
 
@@ -19,6 +21,11 @@ const SizesPage = async ({ params }: { params: { storeId: string } }) => {
   }));
 
   return <Sizes storeId={params.storeId} sizes={formattedSizes} />;
+};
+
+export const metadata: Metadata = {
+  title: "Sizes",
+  description: "On this page, you can see all of the sizes of your store",
 };
 
 export default SizesPage;

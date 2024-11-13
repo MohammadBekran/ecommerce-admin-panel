@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Products from "@/features/products/components";
 import type { TProductColumn } from "@/features/products/core/types";
 
@@ -32,6 +34,11 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   }));
 
   return <Products storeId={params.storeId} products={formattedBillboards} />;
+};
+
+export const metadata: Metadata = {
+  title: "Products",
+  description: "On this page, you can see all of the products of your store",
 };
 
 export default ProductsPage;
