@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Categories from "@/features/categories/components";
 import type { TCategoryColumn } from "@/features/categories/core/types";
 
@@ -27,6 +29,11 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
   return (
     <Categories storeId={params.storeId} categories={formattedCategories} />
   );
+};
+
+export const metadata: Metadata = {
+  title: "Categories",
+  description: "On this page, you can see all of the categories of your store",
 };
 
 export default CategoriesPage;

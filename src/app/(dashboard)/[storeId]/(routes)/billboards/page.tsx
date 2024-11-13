@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Billboards from "@/features/billboards/components";
 import type { TBillboardColumn } from "@/features/billboards/core/types";
 
@@ -25,6 +27,11 @@ const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
   return (
     <Billboards storeId={params.storeId} billboards={formattedBillboards} />
   );
+};
+
+export const metadata: Metadata = {
+  title: "Billboards",
+  description: "On this page, you can see all of the billboards of your store",
 };
 
 export default BillboardsPage;

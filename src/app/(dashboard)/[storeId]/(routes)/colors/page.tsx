@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Colors from "@/features/colors/components";
 import type { TColorColumn } from "@/features/colors/core/types";
 
@@ -19,6 +21,11 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
   }));
 
   return <Colors storeId={params.storeId} colors={formattedColors} />;
+};
+
+export const metadata: Metadata = {
+  title: "Colors",
+  description: "On this page, you can see all of the colors of your store",
 };
 
 export default ColorsPage;
