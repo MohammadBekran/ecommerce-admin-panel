@@ -1,6 +1,8 @@
-import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+
+import Dashboard from "@/features/dashboard/components";
 
 import getStore from "@/core/services/api/store/get-store.api";
 
@@ -18,7 +20,7 @@ const StorePage = async ({ params }: { params: { storeId: string } }) => {
 
   if (!store) redirect("/");
 
-  return <div>Active store: {store?.name}</div>;
+  return <Dashboard storeId={params.storeId} />;
 };
 
 export const metadata: Metadata = {
