@@ -78,3 +78,30 @@
 html.dark body * {
   border-color: #3b3b3b !important;
 }
+
+html.dark .cl-userButtonPopoverMain,
+html.dark .cl-internal-1hp5nqm,
+html.dark .cl-scrollBox,
+html.dark .cl-navbar,
+html.dark .cl-navbarMobileMenuRow {
+  background: hsl(var(--background));
+}
+
+html.dark .cl-userPreview,
+html.dark .cl-userButtonPopoverActionButton,
+html.dark .cl-headerTitle,
+html.dark .cl-navbarButton.cl-active,
+html.dark .cl-internal-pp7u0o,
+html.dark .cl-badge {
+  color: #fff;
+}
+
+html.dark .cl-internal-1xpngvq,
+html.dark .cl-profileSectionPrimaryButton,
+html.dark .cl-internal-bolkfx,
+html.dark .cl-profileSectionTitleText,
+html.dark .cl-internal-1pz8pdy,
+html.dark .cl-navbarButton,
+html.dark .cl-navbarMobileMenuButton {
+  @apply text-muted-foreground;
+}

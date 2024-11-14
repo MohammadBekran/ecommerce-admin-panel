@@ -1,12 +1,22 @@
+import {
+  CircuitBoard,
+  LayoutDashboard,
+  LayoutList,
+  ListOrdered,
+  Palette,
+  Ruler,
+  Settings,
+} from "lucide-react";
+
 const MENU_ITEMS = [
-  { label: "Overview", pathname: "/" },
-  { label: "Billboards", pathname: "/billboards" },
-  { label: "Categories", pathname: "/categories" },
-  { label: "Sizes", pathname: "/sizes" },
-  { label: "Colors", pathname: "/colors" },
-  { label: "Products", pathname: "/products" },
-  { label: "Orders", pathname: "/orders" },
-  { label: "Settings", pathname: "/settings" },
+  { label: "Overview", icon: LayoutDashboard, pathname: "/" },
+  { label: "Billboards", icon: CircuitBoard, pathname: "/billboards" },
+  { label: "Categories", icon: LayoutList, pathname: "/categories" },
+  { label: "Sizes", icon: Ruler, pathname: "/sizes" },
+  { label: "Colors", icon: Palette, pathname: "/colors" },
+  { label: "Products", icon: ListOrdered, pathname: "/products" },
+  { label: "Orders", icon: ListOrdered, pathname: "/orders" },
+  { label: "Settings", icon: Settings, pathname: "/settings" },
 ] as const;
 
 export default MENU_ITEMS;

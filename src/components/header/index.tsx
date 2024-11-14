@@ -2,6 +2,7 @@ import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+import MobileNavbar from "@/components/header/mobile-nav-bar";
 import { ModeToggle } from "@/components/header/mode-toggle";
 import Navbar from "@/components/header/navbar";
 import StoreSwitcher from "@/components/header/store-switcher";
@@ -32,13 +33,20 @@ const Header = async () => {
             <div className="px-3">
               <StoreSwitcher stores={formattedStores} />
             </div>
-            <Navbar />
+            <div className="hidden lg:block">
+              <Navbar />
+            </div>
           </div>
           <div className="flex items-center gap-x-5">
-            <div>
+            <div className="lg:hidden">
+              <MobileNavbar />
+            </div>
+            <div className="hidden lg:block">
               <ModeToggle />
             </div>
-            <UserButton />
+            <div className="hidden lg:block">
+              <UserButton />
+            </div>
           </div>
         </div>
       </div>
