@@ -83,7 +83,9 @@ html.dark .cl-userButtonPopoverMain,
 html.dark .cl-internal-1hp5nqm,
 html.dark .cl-scrollBox,
 html.dark .cl-navbar,
-html.dark .cl-navbarMobileMenuRow {
+html.dark .cl-navbarMobileMenuRow,
+html.dark .cl-card,
+html.dark .cl-footer {
   background: hsl(var(--background));
 }
 
@@ -92,8 +94,23 @@ html.dark .cl-userButtonPopoverActionButton,
 html.dark .cl-headerTitle,
 html.dark .cl-navbarButton.cl-active,
 html.dark .cl-internal-pp7u0o,
-html.dark .cl-badge {
+html.dark .cl-badge,
+html.dark .cl-card,
+html.dark .cl-formFieldLabel,
+html.dark .cl-socialButtonsBlockButtonText {
   color: #fff;
+}
+
+html.dark .cl-dividerLine {
+  @apply bg-gray-700;
+}
+
+html.dark .cl-formFieldInput {
+  @apply bg-zinc-900 text-muted-foreground shadow-sm;
+}
+
+html.dark .cl-cardBox {
+  @apply shadow-md;
 }
 
 html.dark .cl-internal-1xpngvq,
