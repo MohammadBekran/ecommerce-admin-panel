@@ -49,11 +49,15 @@ export async function generateMetadata({
     },
   });
 
+  const title = product ? product?.name : "New product";
+  const description = product
+    ? `On this page, you can edit the product '${product?.name}'`
+    : "On this page, you can create a new product";
   const productImage = product?.images[0] ?? "/placeholder.jpeg";
 
   return {
-    title: product?.name,
-    description: `On this page, you can edit the product '${product?.name}'`,
+    title,
+    description,
     openGraph: {
       images: [productImage],
     },

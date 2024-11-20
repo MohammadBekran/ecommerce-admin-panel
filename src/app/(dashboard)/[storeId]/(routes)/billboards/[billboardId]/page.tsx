@@ -23,11 +23,15 @@ export async function generateMetadata({
     where: { id: params.billboardId, storeId: params.storeId },
   });
 
+  const title = billboard ? billboard?.label : "New billboard";
+  const description = billboard
+    ? `On this page, you can edit the billboard '${billboard?.label}'`
+    : "On this page, you can create a new billboard";
   const billboardImage = billboard?.imageUrl ?? "/placeholder.jpeg";
 
   return {
-    title: billboard?.label,
-    description: `On this page, you can edit the billboard '${billboard?.label}'`,
+    title,
+    description,
     openGraph: {
       images: [billboardImage],
     },

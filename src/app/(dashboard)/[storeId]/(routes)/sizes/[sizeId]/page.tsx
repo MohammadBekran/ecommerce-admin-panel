@@ -23,9 +23,14 @@ export async function generateMetadata({
     where: { id: params.sizeId, storeId: params.storeId },
   });
 
+  const title = size ? size?.name : "New size";
+  const description = size
+    ? `On this page, you can edit the size '${size?.name}'`
+    : "On this page, you can create a new size";
+
   return {
-    title: size?.name,
-    description: `On this page, you can edit the size '${size?.name}'`,
+    title,
+    description,
   };
 }
 

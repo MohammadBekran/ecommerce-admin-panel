@@ -44,7 +44,7 @@ const MobileNavbar = () => {
                   >
                     <Link
                       href={dynamicRoute}
-                      className="flex items-center gap-x-3"
+                      className="flex items-center gap-x-2"
                     >
                       <Icon className="size-4"></Icon>
                       {label}
