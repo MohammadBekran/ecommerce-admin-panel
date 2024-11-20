@@ -40,6 +40,12 @@ export const PATCH = async (
   { params }: { params: { storeId: string; productId: string } }
 ) => {
   try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+    }
+
     const {
       name,
       price,
@@ -50,11 +56,6 @@ export const PATCH = async (
       colorId,
       images,
     } = await request.json();
-    const { userId } = auth();
-
-    if (!userId) {
-      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
-    }
 
     if (!params.productId) {
       return NextResponse.json(
@@ -65,13 +66,15 @@ export const PATCH = async (
 
     if (!params.storeId) {
       return NextResponse.json(
-        { message: "storeId is required." },
+        { message: "StoreId is required." },
         { status: 400 }
       );
     }
 
+    const where = { id: params.productId, storeId: params.storeId };
+
     const product = await prisma.product.findUnique({
-      where: { id: params.productId, storeId: params.storeId },
+      where,
     });
 
     if (!product) {
@@ -83,10 +86,7 @@ export const PATCH = async (
       .map(({ id }: { id: string }) => id);
 
     const updatedProduct = await prisma.product.update({
-      where: {
-        id: params.productId,
-        storeId: params.storeId,
-      },
+      where,
       data: {
         name,
         price,

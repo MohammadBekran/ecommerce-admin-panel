@@ -79,7 +79,7 @@ export const PATCH = async (
 
     return NextResponse.json(updatedSize);
   } catch (error) {
-    console.error("[SIZE_ERROR]", error);
+    console.error("[COLOR_ERROR]", error);
 
     return NextResponse.json(
       { message: "Internal server error" },
