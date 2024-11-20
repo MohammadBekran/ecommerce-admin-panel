@@ -36,11 +36,15 @@ export async function generateMetadata({
     },
   });
 
+  const title = category ? category?.name : "New category";
+  const description = category
+    ? `On this page, you can edit the category '${category?.name}'`
+    : "On this page, you can create a new category";
   const billboardImage = category?.billboard.imageUrl ?? "/placeholder.jpeg";
 
   return {
-    title: category?.name,
-    description: `On this page, you can edit the category '${category?.name}'`,
+    title,
+    description,
     openGraph: {
       images: [billboardImage],
     },

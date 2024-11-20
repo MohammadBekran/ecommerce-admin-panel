@@ -23,9 +23,14 @@ export async function generateMetadata({
     where: { id: params.colorId, storeId: params.storeId },
   });
 
+  const title = color ? color?.name : "New color";
+  const description = color
+    ? `On this page, you can edit the color '${color?.name}'`
+    : "On this page, you can create a new color";
+
   return {
-    title: color?.name,
-    description: `On this page, you can edit the color '${color?.name}'`,
+    title,
+    description,
   };
 }
 
