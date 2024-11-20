@@ -26,7 +26,7 @@ const Navbar = () => {
                 pathname === dynamicRoute && "text-gray-900 dark:text-gray-300"
               )}
             >
-              <Link href={dynamicRoute} className="flex items-center gap-x-3">
+              <Link href={dynamicRoute} className="flex items-center gap-x-1">
                 <Icon className="size-4"></Icon>
                 {label}
               </Link>

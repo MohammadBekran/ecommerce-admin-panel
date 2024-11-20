@@ -4,6 +4,8 @@ import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
+import { changeOrderStatus } from "@/features/orders/core/services/api";
+
 import AlertModal from "@/components/ui/alert-modal";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,27 +21,43 @@ interface ICellActionProps<T> {
   data: T;
   dataKey: string;
   apiKey: string;
-  onDelete: (id: string, onDelete: () => void) => void;
+  id?: string;
+  update?: boolean;
+  order: boolean;
+  onDelete?: (id: string, onDelete: () => void) => void;
 }
 
 const CellAction = <T extends { id: string }>({
   data,
   dataKey,
   apiKey,
+  id,
+  update = true,
+  order,
   onDelete,
 }: ICellActionProps<T>) => {
-  const [open, setOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [orderStatusOpen, setOrderStatusOpen] = useState(false);
+  const [isDeletePending, startDeleteTransition] = useTransition();
+  const [isChangeStatusPending, startStatusTransition] = useTransition();
   const router = useRouter();
   const params = useParams();
 
-  const onDeleteFunc = () => {
+  const onChange = (setOpen: (open: boolean) => void) => {
     router.refresh();
     setOpen(false);
   };
 
   const handleDelete = () => {
-    startTransition(() => onDelete(params.storeId as string, onDeleteFunc));
+    startDeleteTransition(() =>
+      onDelete?.(params.storeId as string, () => onChange(setDeleteOpen))
+    );
+  };
+
+  const handleChangeOrderStatus = () => {
+    startStatusTransition(() =>
+      changeOrderStatus(params.storeId, id!, () => onChange(setOrderStatusOpen))
+    );
   };
 
   return (
@@ -47,10 +65,18 @@ const CellAction = <T extends { id: string }>({
       <AlertModal
         title="Are you sure?"
         description="This action cannot be undone."
-        open={open}
-        onClose={() => setOpen(false)}
+        open={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
         onConfirm={handleDelete}
-        loading={isPending}
+        loading={isDeletePending}
+      />
+      <AlertModal
+        title="Are you sure?"
+        description="This action cannot be undone."
+        open={orderStatusOpen}
+        onClose={() => setOrderStatusOpen(false)}
+        onConfirm={handleChangeOrderStatus}
+        loading={isChangeStatusPending}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -69,18 +95,28 @@ const CellAction = <T extends { id: string }>({
             <Copy className="cell-action-icon" />
             Copy id
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() =>
-              router.push(`/${params.storeId}/${apiKey}/${data.id}`)
-            }
-          >
-            <Edit className="cell-action-icon" />
-            Update
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="cell-action-icon" />
-            Delete
-          </DropdownMenuItem>
+          {update && (
+            <DropdownMenuItem
+              onClick={() =>
+                router.push(`/${params.storeId}/${apiKey}/${data.id}`)
+              }
+            >
+              <Edit className="cell-action-icon" />
+              Update
+            </DropdownMenuItem>
+          )}
+          {onDelete && (
+            <DropdownMenuItem onClick={() => setDeleteOpen(true)}>
+              <Trash className="cell-action-icon" />
+              Delete
+            </DropdownMenuItem>
+          )}
+          {order && (
+            <DropdownMenuItem onClick={() => setOrderStatusOpen(true)}>
+              <Edit className="cell-action-icon" />
+              Change Status
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </>

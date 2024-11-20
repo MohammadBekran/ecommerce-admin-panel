@@ -20,7 +20,7 @@ const Orders = ({ orders }: IOrdersProps) => {
         />
         <Separator />
       </div>
-      <DataTable columns={ORDER_COLUMNS} data={orders} searchKey="address" />
+      <DataTable columns={ORDER_COLUMNS} data={orders} searchKey="products" />
       <Heading title="API " description="API calls for Orders" />
       <div className="my-4 space-y-4">
         <Separator />
