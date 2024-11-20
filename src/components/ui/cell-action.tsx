@@ -23,7 +23,7 @@ interface ICellActionProps<T> {
   apiKey: string;
   id?: string;
   update?: boolean;
-  order: boolean;
+  order?: boolean;
   onDelete?: (id: string, onDelete: () => void) => void;
 }
 
